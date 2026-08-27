@@ -1,0 +1,55 @@
+# Wiring Cheatsheet
+
+Circuits you've actually built, plus the minimum electronics knowledge this plan needs. Add each new circuit as you build it — by Phase 4 you'll have a dozen and no memory of any of them.
+
+---
+
+## The six facts
+
+1. **Breadboard.** The long `+` / `−` rails run the full length. In the middle, **five holes in a column are one connection**, and the centre channel separates the two halves. Adjacent columns are not connected, no matter how close they look.
+2. **Every LED needs a resistor.** 200Ω or 330Ω in series. Long leg = anode = `+`, short leg = cathode = `−` (also marked by a flat spot on the rim). An LED will otherwise draw current until it destroys itself.
+3. **Everything shares a GND.** Any two things that interact must have their grounds connected. Roughly 80% of "it doesn't work" is a missing ground wire.
+4. **Buttons need a defined resting state.** A floating input pin reads random noise. This plan uses `pinMode(pin, INPUT_PULLUP)` — one line of code instead of a resistor, with the button reading inverted. *(Week 5.)*
+5. **The Arduino cannot power motors.** Motors, the stepper and the relay coil draw far more current than a pin can supply. They get the external 9V supply, grounds tied together. *(Phase 6.)*
+6. **Analog vs digital pins.** `D0`–`D13` are on/off. `A0`–`A5` read a *range* of voltages — that's how sensors report numbers instead of yes/no. `A4`/`A5` double as the I²C pins used by the MPU6050.
+
+> ⚠️ **Unplug the USB before changing any wiring.** Every time.
+> ⚠️ **Never use pins 0 or 1.** They're the USB pins — anything attached breaks uploads.
+> ⚠️ **Never connect the relay to mains voltage** during this plan. 5V and 9V are harmless. Mains is not.
+
+---
+
+## Circuits built
+
+### Week 0 — Two LEDs
+
+| Pin | Component | Notes |
+|---|---|---|
+| 8 | Red LED | via 200Ω/330Ω resistor to anode; cathode → `−` rail |
+| 9 | Green LED | same |
+| `GND` | → breadboard `−` rail | the one everybody forgets |
+
+```
+  pin 8 ──► resistor ──► LED long leg
+                             │
+                        LED short leg ──► − rail ──► GND
+```
+
+Full build instructions: [`phase-0-first-contact/week-00-setup/wiring.md`](../phase-0-first-contact/week-00-setup/wiring.md)
+
+<!-- Week 5 — buttons: add here -->
+
+---
+
+## Resistor colour codes
+
+Only the ones this plan actually uses. First three bands; the gold fourth band is tolerance, ignore it.
+
+| Value | Bands | Used for |
+|---|---|---|
+| 200Ω | red · black · brown | LEDs |
+| 330Ω | orange · orange · brown | LEDs |
+| 1kΩ | brown · black · red | general |
+| 10kΩ | brown · black · orange | pull-downs, sensor dividers |
+
+Resistors have no direction — either way round is fine.

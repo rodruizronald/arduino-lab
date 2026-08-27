@@ -1,0 +1,7 @@
+# macOS
+.DS_Store
+
+# Arduino build artifacts
+build/
+*.hex
+*.elf
