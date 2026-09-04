@@ -25,26 +25,30 @@ Two reasons this file exists:
     Week 0, Exercise 1 "Break it" — fill these in yourself.
     Copy the EXACT message, don't paraphrase it.
 
-### <paste the error from deleting the final '}'>
+### `expected '}' at end of input`
 
-**What it actually means:**
-**How I found it:**
+**What it actually means:** A closing brace `}` is missing.
 
----
-
-### <paste the error from changing delay to Delay>
-
-**What it actually means:**
-**How I found it:**
+**How I found it:** The compiler reached the end of the program expecting a `}`, so I checked the braces and found the missing final `}`.
 
 ---
 
-### <paste the error from changing digitalWrite to digitalwrite>
+### `'Delay' was not declared in this scope`
 
-**What it actually means:**
-**How I found it:**
+**What it actually means:** C++ is case-sensitive. `Delay` and `delay` are different names.
+
+**How I found it:** The compiler suggested `delay`, so I changed `Delay` back to `delay`. 
 
 ---
+
+### `'digitalwrite' was not declared in this scope`
+
+**What it actually means:** C++ is case-sensitive. `digitalwrite` is not the same function as `digitalWrite`.
+
+**How I found it:** I compared the function name with the correct spelling and noticed the uppercase `W`.
+
+---
+
 -->
 
 > **Reading long errors:** when the output is 40 lines, **read the first error only.** Everything below it is usually wreckage caused by the first one. Fix the top one, recompile, look again.
