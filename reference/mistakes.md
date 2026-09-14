@@ -64,8 +64,25 @@ Two reasons this file exists:
 
 ## Logic errors
 
+The expensive ones. These compile cleanly and do the wrong thing. No error message will ever point at them — the only way one gets recorded is if you notice and write it down.
+
+### A duration that goes negative — `int` overflow
+
+**What I saw:** an `int` holding milliseconds went past 32,767 and came back as a negative number. Then `delay()` sat there for what looked like forever.
+
+**What it actually means:** `int` on this board is 16 bits and stops at 32,767 — about 33 seconds in milliseconds. Past that it wraps silently to the most negative value and keeps going. `delay()` takes an `unsigned long`, so a negative `int` is reinterpreted as an enormous positive one: `-25536` becomes roughly 50 days.
+
+**Why it's here and not in Compiler errors:** the grammar was perfect. Nothing was reported, at any point. The program ran and produced a confident wrong answer.
+
+**How to find it:** print the value. A duration that is negative, or far smaller than it should be, has overflowed. Check the intermediate steps too — `int + int` wraps *before* the result is stored, even if you store it in an `unsigned long`.
+
+**The fix:** `unsigned long` for any value in milliseconds that gets added to another one.
+
+*(Week 1, Exercise 3.)*
+
+---
+
 <!--
-    The expensive ones. These compile cleanly and do the wrong thing.
-    Nothing here yet — you'll start collecting them around Week 5,
-    and by Week 12 this section will be the longest in the file.
+    Add yours as you find them. From Week 5 onward this section grows
+    fast, and by Week 12 it will be the longest in the file.
 -->
