@@ -24,6 +24,7 @@ Two reasons this file exists:
 <!--
     Week 0, Exercise 1 "Break it" — fill these in yourself.
     Copy the EXACT message, don't paraphrase it.
+-->
 
 ### `expected '}' at end of input`
 
@@ -48,8 +49,6 @@ Two reasons this file exists:
 **How I found it:** I compared the function name with the correct spelling and noticed the uppercase `W`.
 
 ---
-
--->
 
 > **Reading long errors:** when the output is 40 lines, **read the first error only.** Everything below it is usually wreckage caused by the first one. Fix the top one, recompile, look again.
 
