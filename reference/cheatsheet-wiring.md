@@ -37,6 +37,23 @@ Circuits you've actually built, plus the minimum electronics knowledge this plan
 
 Full build instructions: [`phase-0-first-contact/week-00-setup/wiring.md`](../phase-0-first-contact/week-00-setup/wiring.md)
 
+### Week 1 — Three LEDs (kept for all of Phase 1)
+
+Green moves from pin 9 to pin 10; yellow takes pin 9. Stack them physically red / yellow / green, top to bottom.
+
+| Pin | Component | Notes |
+|---|---|---|
+| 8 | Red LED | unchanged from Week 0 |
+| 9 | Yellow LED | new |
+| 10 | Green LED | moved from pin 9 |
+| `GND` | → breadboard `−` rail | shared by all three cathodes |
+
+Each LED is the same hop: `pin → resistor → long leg … short leg → − rail → GND`.
+
+Full build instructions: [`phase-1-sequence/week-01-variables/wiring.md`](../phase-1-sequence/week-01-variables/wiring.md)
+
+> Once the pins have names in your code (`PIN_RED`, `PIN_YELLOW`, `PIN_GREEN`), moving an LED to a different pin costs one line. That is the point of Week 1, demonstrated in hardware.
+
 <!-- Week 5 — buttons: add here -->
 
 ---

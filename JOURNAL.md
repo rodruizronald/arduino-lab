@@ -54,3 +54,29 @@ The important one. Even if it feels small.
 <!-- One-off prompt for this week only. Count your digitalWrite calls.
      Describe the feeling of typing the same block for the third time.
      You'll want to reread this in Week 2. -->
+
+---
+
+## Week 1 — Names for Numbers <!-- date: -->
+
+**What I built**
+
+<!-- TODO -->
+
+**What confused me**
+
+<!-- TODO -->
+
+**What broke, and why**
+
+<!-- TODO -->
+
+**What I understand now that I didn't at the start of the week**
+
+<!-- TODO -->
+
+**Name one variable you renamed after writing it**
+
+<!-- One-off prompt for this week only. What was wrong with the first
+     name? And what did you have to learn about the program before you
+     could see that it was wrong? -->

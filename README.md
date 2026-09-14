@@ -86,6 +86,8 @@ Getting the machine to obey you at all.
 
 ### Phase 1 — Sequence, Repetition, Decomposition `[Weeks 1–4]`
 
+> 📁 **[`phase-1-sequence/`](phase-1-sequence/)** — phase overview written, [Week 1](phase-1-sequence/week-01-variables/) ready to start.
+
 Four weeks, five LEDs, zero input. Everything here is about **the shape of code**.
 
 | Week | Target | Programming concept |
@@ -287,15 +289,15 @@ arduino-lab/
 │       ├── wiring.md
 │       ├── exercise-1-blink-builtin/exercise-1-blink-builtin.ino
 │       └── challenge/challenge.ino
-├── phase-1-sequence/
+├── phase-1-sequence/           ← Week 1 WRITTEN
 │   ├── README.md              ← phase overview + what "done" means
 │   ├── week-01-variables/
-│   │   ├── README.md          ← concept · wiring · exercises · drills · challenge
+│   │   ├── README.md          ← concept · dry run · wiring · exercises · drills · challenge
 │   │   ├── wiring.md
-│   │   ├── exercise-1/exercise-1.ino
-│   │   ├── exercise-2/exercise-2.ino
+│   │   ├── exercise-1-first-variable/exercise-1-first-variable.ino
+│   │   ├── ... (5 exercises)
 │   │   └── challenge/challenge.ino
-│   └── week-02-loops/
+│   └── week-02-loops/          ← written when you reach it
 │       └── ...
 ├── phase-2-state/
 └── ...
@@ -313,7 +315,7 @@ arduino-lab/
 - [ ] 🟨 [Week 0](phase-0-first-contact/week-00-setup/) — Setup, first blink, first Serial print
 
 ### Phase 1 — Sequence, Repetition, Decomposition
-- [ ] ⬜ Week 1 — Variables, types, constants
+- [ ] 🟨 [Week 1](phase-1-sequence/week-01-variables/) — Variables, types, constants
 - [ ] ⬜ Week 2 — Loops
 - [ ] ⬜ Week 3 — Functions
 - [ ] ⬜ Week 4 — Arrays & data-driven design
@@ -383,4 +385,6 @@ Things to confirm before the phases that need them:
 
 **[Phase 0 — First Contact](phase-0-first-contact/) is written and ready to start.** Install the IDE, wire two LEDs, and go: [Week 0 →](phase-0-first-contact/week-00-setup/)
 
-Phase 1 gets written when you finish it.
+**[Phase 1 — Week 1](phase-1-sequence/week-01-variables/) is written too.** Once Week 0's challenge has made you type `digitalWrite` forty times, Week 1 gives every one of those numbers a name.
+
+Weeks 2–4 get written as you reach them — deliberately, so they can adapt to what actually confused you.
