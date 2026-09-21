@@ -30,18 +30,21 @@
  *
  *      <-- Number 5 is the interesting one. It COMPILES. Upload it
  *          and watch. Which of the two kinds of wrong is that?
- *          (See README section 1.6.)
+ *          (See README section 1.6.) (Logic error). 
  *
  * ------------------------------------------------------------------
  * AFTER THIS: go back and check your Dry Run answers for snippets
  * A, B and C. Run them if you're unsure -- it costs nothing.
  */
-
-
 void setup() {
-  // TODO: announce that LED_BUILTIN will send signals out
-}
+pinMode(LED_BUILTIN, OUTPUT);
+} 
 
 void loop() {
-  // TODO: on, wait a second, off, wait a second
-}
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(1000);
+
+  digitalWrite(LED_BUILTIN, LOW); 
+  delay(1000);
+
+

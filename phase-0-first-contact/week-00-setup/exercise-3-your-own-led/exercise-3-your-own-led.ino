@@ -12,7 +12,7 @@
  * WHAT TO DO
  *   Start from your Exercise 1 program. Exactly TWO things need to
  *   change. Work out which two before reading the hint below.
- *
+ * 
  * THE POINT
  *   LED_BUILTIN was training wheels -- it is just the number 13 with
  *   a friendly name attached. Pins are numbers, and which pin you use
@@ -37,17 +37,25 @@
  *   calls on pin 8.
  *
  *   PREDICT FIRST, in writing: does the red LED blink? Does green?
- *   Does neither? Does it even compile?
+ *   Does neither? Does it even compile? 
  *
  *   Then run it. Were you right? If not -- why did you expect what
  *   you expected? That gap is the useful part.
+ *   What happened: The red LED still blinked one second on and one second off.
+*    (My prediction: I think it will not work).
  */
 
 
 void setup() {
-  // TODO
+pinMode(8, OUTPUT);
+
 }
 
 void loop() {
-  // TODO
+  digitalWrite(8, HIGH);
+  delay(1000);
+
+  digitalWrite(8, LOW);
+  delay(1000);
+  
 }
