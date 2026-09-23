@@ -85,13 +85,46 @@
  */
 
 
-// TODO: your constants from Exercise 4
+const unsigned long UNIT_MS = 400;
+const unsigned long SHORT_MS = UNIT_MS;
+const unsigned long LONG_MS = UNIT_MS * 3;
+const unsigned long GAP_MS = UNIT_MS / 2;
 
+const int PIN_RED = 8;
+const int PIN_YELLOW = 9;
+const int PIN_GREEN = 10;
 
 void setup() {
-  // TODO: pins, Serial.begin, and a boot marker
+  Serial.begin(9600);
+  Serial.println("--- boot ---");
+
+  pinMode(PIN_RED, OUTPUT);
+  pinMode(PIN_YELLOW, OUTPUT);
+  pinMode(PIN_GREEN, OUTPUT);
 }
 
 void loop() {
-  // TODO: each phase announces itself AND its duration, from the variable
+  Serial.print("red on for ");
+  Serial.print(SHORT_MS);
+  Serial.println(" ms");
+  digitalWrite(PIN_RED, HIGH);
+  delay(SHORT_MS);
+  digitalWrite(PIN_RED, LOW);
+  delay(GAP_MS);
+
+  Serial.print("yellow on for ");
+  Serial.print(SHORT_MS);
+  Serial.println(" ms");
+  digitalWrite(PIN_YELLOW, HIGH);
+  delay(SHORT_MS);
+  digitalWrite(PIN_YELLOW, LOW);
+  delay(GAP_MS);
+
+  Serial.print("green on for ");
+  Serial.print(LONG_MS);
+  Serial.println(" ms");
+  digitalWrite(PIN_GREEN, HIGH);
+  delay(LONG_MS);
+  digitalWrite(PIN_GREEN, LOW);
+  delay(GAP_MS);
 }

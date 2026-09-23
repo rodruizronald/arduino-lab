@@ -57,26 +57,26 @@ The important one. Even if it feels small.
 
 ---
 
-## Week 1 — Names for Numbers <!-- date: -->
+## Week 1 — Names for Numbers <!-- date: 2026-09-22 -->
 
 **What I built**
 
-<!-- TODO -->
+This week I worked with three LEDs and made a traffic light. I used names for the pins and times, and printed the values in the Serial Monitor. I also tested different rhythms and made small changes to see what happened.
 
 **What confused me**
 
-<!-- TODO -->
+This week was a bit harder than the last one. It needed more tests, so it took more time. At first, I was confused about changing a variable's value and using its name inside delay(). I also needed help finding exactly which line to change during the error tests.
 
 **What broke, and why**
 
-<!-- TODO -->
+Moving a variable inside setup() meant loop() could not use it. Changing an uppercase letter made the variable name different. I also saw that int could be too small for a time value, which caused a very long wait. When I put a variable name in quotes, the Serial Monitor printed the name instead of its value.
 
 **What I understand now that I didn't at the start of the week**
 
-<!-- TODO -->
+I learned that variables give values a name, and const stops the program from changing a value. I learned that different types can hold different amounts of information. I can use one main time value to change a whole pattern, and the Serial Monitor helps me check the values the program is using. print() keeps writing on the same line, while println() ends the line.
+
+In the traffic light, I still used nine digitalWrite calls. Giving values names made the code clearer, but it did not remove the repeated instructions.
 
 **Name one variable you renamed after writing it**
 
-<!-- One-off prompt for this week only. What was wrong with the first
-     name? And what did you have to learn about the program before you
-     could see that it was wrong? -->
+I renamed onTimeMs to redOnMs and offTimeMs to redOffMs during the final review. The first names did not say which LED the times belonged to. After working with three LEDs, I understood why including the color makes the names clearer. The values and behavior stayed the same.

@@ -109,13 +109,74 @@
  */
 
 
-// TODO: pins, then GREEN_MS, then everything derived from it
+/*
+ * PLAN BEFORE IMPLEMENTATION
+ * GO: green on, other LEDs off, for 4000 ms.
+ * CAUTION: yellow on, other LEDs off, for half the green time: 2000 ms.
+ * STOP: red on, other LEDs off, for the same time as green: 4000 ms.
+ * Repeat. Print each phase and its duration. Once per cycle, print the
+ * sum of the delays for ten cycles: 100000 ms at the initial setting.
+ * Change only GREEN_MS from 4000 to 2000 for the acceptance test:
+ * durations become 2000, 1000, 2000; ten cycles total 50000 ms.
+ * This written plan is in the sketch; it is not a claim of a paper exercise.
+ *
+ * CONSTRAINT TO DISCUSS WITH THE TEACHER
+ * Separate digitalWrite calls cannot switch two pins at exactly the same
+ * instant. Turning the old LED off first leaves a brief all-off transition.
+ * Turning the new LED on first would briefly light two LEDs. This version
+ * uses the allowed commands and avoids overlap, but does not meet the
+ * literal "never zero, even for microseconds" rule. Reset also starts off.
+ * Printed cycle totals sum the delays; command and Serial time add overhead.
+ */
 
+const int PIN_RED = 8;
+const int PIN_YELLOW = 9;
+const int PIN_GREEN = 10;
+
+const unsigned long GREEN_MS = 2000;
+const unsigned long YELLOW_MS = GREEN_MS / 2;
+const unsigned long RED_MS = GREEN_MS;
+const unsigned long CYCLE_MS = GREEN_MS + YELLOW_MS + RED_MS;
+const unsigned long CYCLE_COUNT = 10;
+const unsigned long TEN_CYCLES_MS = CYCLE_MS * CYCLE_COUNT;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO
+  pinMode(PIN_RED, OUTPUT);
+  pinMode(PIN_YELLOW, OUTPUT);
+  pinMode(PIN_GREEN, OUTPUT);
+  Serial.begin(SERIAL_BAUD);
+  Serial.println("--- boot ---");
 }
 
 void loop() {
-  // TODO
+
+  digitalWrite(PIN_RED, LOW);
+  digitalWrite(PIN_YELLOW, LOW);
+  digitalWrite(PIN_GREEN, HIGH);
+  Serial.print("GO - green for ");
+  Serial.print(GREEN_MS);
+  Serial.println(" ms");
+  delay(GREEN_MS);
+
+
+  digitalWrite(PIN_GREEN, LOW);
+  digitalWrite(PIN_RED, LOW);
+  digitalWrite(PIN_YELLOW, HIGH);
+  Serial.print("CAUTION - yellow for ");
+  Serial.print(YELLOW_MS);
+  Serial.println(" ms");
+  delay(YELLOW_MS);
+
+
+  digitalWrite(PIN_YELLOW, LOW);
+  digitalWrite(PIN_GREEN, LOW);
+  digitalWrite(PIN_RED, HIGH);
+  Serial.print("STOP - red for ");
+  Serial.print(RED_MS);
+  Serial.println(" ms");
+  Serial.print("Ten cycles (sum of delays): ");
+  Serial.print(TEN_CYCLES_MS);
+  Serial.println(" ms");
+  delay(RED_MS);
 }

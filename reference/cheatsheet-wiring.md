@@ -54,6 +54,16 @@ Full build instructions: [`phase-1-sequence/week-01-variables/wiring.md`](../pha
 
 > Once the pins have names in your code (`PIN_RED`, `PIN_YELLOW`, `PIN_GREEN`), moving an LED to a different pin costs one line. That is the point of Week 1, demonstrated in hardware.
 
+### Actual Week 1 breadboard — 30 rows
+
+| LED | Anode | Cathode | Resistor | Signal jumper | Ground jumper |
+|---|---|---|---|---|---|
+| Red | E10 | E11 | A6–A10 | pin 8–B6 | A11–negative rail |
+| Yellow | E20 | E21 | A16–A20 | pin 9–B16 | A21–negative rail |
+| Green | E29 | E30 | A27–A29 | pin 10–B27 | A30–negative rail |
+
+The negative rail connects to Arduino GND. The green layout replaces the suggested row 31, which this breadboard does not have. A–E with the same row number share a connection. Keep a separate series resistor for each LED and unplug USB before changing wiring.
+
 <!-- Week 5 — buttons: add here -->
 
 ---
