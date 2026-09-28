@@ -32,14 +32,19 @@
  *
  * BREAK IT
  *   Set BOTH delays to 0. What do you see? What is the LED
- *   actually doing? (It is not "off".)
+ *   actually doing? (It looks like the LED never turns off, but it is actually switching between HIGH and LOW extremely fast.)
  */
 
-
+ 
 void setup() {
-  // TODO
+  pinMode(LED_BUILTIN, OUTPUT);
+
 }
 
 void loop() {
-  // TODO: rhythm A first. Then edit for B. Then C.
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(0);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(0);
+  
 }

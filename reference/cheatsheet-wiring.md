@@ -63,6 +63,25 @@ Full build instructions: [`phase-1-sequence/week-01-variables/wiring.md`](../pha
 | Green | E29 | E30 | A27–A29 | pin 10–B27 | A30–negative rail |
 
 The negative rail connects to Arduino GND. The green layout replaces the suggested row 31, which this breadboard does not have. A–E with the same row number share a connection. Keep a separate series resistor for each LED and unplug USB before changing wiring.
+### Week 2 — Four LEDs in a row
+
+Blue added on pin 7, at the free end of the row beside red. The row now runs in pin order, which is what makes a loop over pin numbers look like a light travelling.
+
+| Pin | Component | Notes |
+|---|---|---|
+| 7 | Blue LED | new — columns 1–5, beside red |
+| 8 | Red LED | unchanged |
+| 9 | Yellow LED | unchanged |
+| 10 | Green LED | unchanged |
+| `GND` | → breadboard `−` rail | shared by all four cathodes |
+
+```
+  blue(7) · red(8) · yellow(9) · green(10)        ← physical order = pin order
+```
+
+Full build instructions: [`phase-1-sequence/week-02-loops/wiring.md`](../phase-1-sequence/week-02-loops/wiring.md)
+
+> A 400-point breadboard has **30 columns**, numbered 1–30. The four LEDs fill the row; a fifth won't fit in line, and that's deliberate — see Week 4.
 
 <!-- Week 5 — buttons: add here -->
 

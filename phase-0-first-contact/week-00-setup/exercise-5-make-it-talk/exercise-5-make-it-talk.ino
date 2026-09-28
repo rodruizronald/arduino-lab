@@ -54,15 +54,28 @@
  *   Delete the Serial.begin(9600) line but keep all the println calls.
  *   It compiles cleanly. It uploads. The LEDs still work.
  *
- *   What does the Serial Monitor show? Why?
- *   Which of the two kinds of wrong is this?
+ *   What does the Serial Monitor show? Why?  R/The Serial Monitor does not show any new messages 
+ *   because Serial.begin(9600) was deleted, so the serial communication was not initialized.
+ *
+ *   Which of the two kinds of wrong is this? R/It is a logic error because the program compiles and uploads successfully,
  */
 
 
 void setup() {
-  // TODO: pins, plus open the serial channel
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  Serial.begin(9600);//serial port is opened at 9600 baud
+
 }
 
 void loop() {
-  // TODO: exercise 4's sequence, plus an announcement per LED
+  digitalWrite(8, HIGH);
+  digitalWrite(9, LOW);
+  Serial.println("RED ON");
+  delay(1000);
+
+  digitalWrite(8, LOW);
+  digitalWrite(9, HIGH);
+  Serial.println("GREEN ON");
+  delay(1000);
 }

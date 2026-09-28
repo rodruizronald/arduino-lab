@@ -43,17 +43,17 @@ Each will feel like relief. It only feels like relief because you did it the har
 | Week | Folder | Target | Concept |
 |---|---|---|---|
 | 1 | [`week-01-variables/`](week-01-variables/) | Blink patterns driven by named values | Variables · types · constants · naming · sequential execution |
-| 2 | ⬜ `week-02-loops/` | LED chase, bounce, binary counter | `for` / `while` · counters · nesting · off-by-one |
+| 2 | [`week-02-loops/`](week-02-loops/) | LED chase, bounce, binary counter | `for` / `while` · counters · nesting · off-by-one |
 | 3 | ⬜ `week-03-functions/` | Reusable pattern generators | Functions · parameters · return values · DRY · scope |
 | 4 | ⬜ `week-04-arrays/` | Pattern *tables* | Arrays · indexing · iteration · data-driven design |
 
-Weeks 2–4 get written as you reach them. Finish Week 1 first — the plan is deliberately not written ahead, so it can adapt to what actually confuses you.
+Weeks 3–4 get written as you reach them. The plan is deliberately not written ahead, so it can adapt to what actually confuses you.
 
 ---
 
 ## The hardware, once
 
-You build the circuit in Week 1 and **leave it standing for the whole phase**. Weeks 2–4 add LEDs to it but never tear it down.
+You build the circuit in Week 1 and **leave it standing for the whole phase**. Weeks 2–4 add LEDs to it but never tear it down. Week 2 adds a fourth — blue, on pin 7 — at the free end of the row.
 
 That's not laziness. Rule 4: one new concept at a time. If the wiring changed every week, half your debugging time would go on circuits instead of code — and the point of these four weeks is entirely code.
 

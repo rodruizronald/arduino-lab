@@ -50,10 +50,10 @@
  *
  * When it works, stop and count:
  *
- *   - How many lines are in your loop()?
- *   - How many times did you type digitalWrite?
+ *   - How many lines are in your loop()?  R/ There are 73 lines of executable code in my loop().
+ *   - How many times did you type digitalWrite? R/ I typed digitalWrite 40 times.
  *   - How did you feel around the third time you typed the same
- *     four lines over again?
+ *     four lines over again? R/ I think repeating the same lines was helpful because it helped me memorize the commands and understand them better.
  *
  * WRITE THAT FEELING DOWN IN YOUR JOURNAL.
  *
@@ -72,9 +72,123 @@
 
 
 void setup() {
-  // TODO
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  Serial.begin(9600);
 }
 
 void loop() {
-  // TODO
+
+
+  //BOOTING (5 flashes)
+  Serial.println("BOOTING...");
+
+  //Flash 1
+  digitalWrite(8, HIGH);
+  digitalWrite(9, HIGH);
+  delay(150);
+  digitalWrite(8, LOW);
+  digitalWrite(9, LOW);
+  delay(150);
+
+  //Flash 2
+  digitalWrite(8, HIGH);
+  digitalWrite(9, HIGH);  
+  delay(150);
+  digitalWrite(8, LOW);
+  digitalWrite(9, LOW);
+  delay(150);
+
+  //Flash 3
+  digitalWrite(8, HIGH);
+  digitalWrite(9, HIGH);
+  delay(150);
+  digitalWrite(8, LOW);
+  digitalWrite(9, LOW);
+  delay(150);
+
+  //Flash 4
+  digitalWrite(8, HIGH);
+  digitalWrite(9, HIGH);
+  delay(150);
+  digitalWrite(8, LOW);
+  digitalWrite(9, LOW);
+  delay(150);
+  
+  //Flash 5
+  digitalWrite(8, HIGH);
+  digitalWrite(9, HIGH);
+  delay(150);
+  digitalWrite(8, LOW);
+  digitalWrite(9, LOW);
+  delay(150);
+
+  //RUNNING (verde 3 veces)
+  Serial.println("RUNNING");
+  digitalWrite(8, LOW);
+  
+  //Pulse 1
+  digitalWrite(9, HIGH);
+  delay(1000);
+  digitalWrite(9, LOW);
+  delay(1000);
+
+  //Pulse 2
+  digitalWrite(9, HIGH);
+  delay(1000);
+  digitalWrite(9, LOW);
+  delay(1000);
+
+  //Pulse 3
+  digitalWrite(9, HIGH);
+  delay(1000);
+  digitalWrite(9, LOW);
+  delay(1000);
+
+  //ERROR (rojo 3 veces)
+
+  Serial.println("ERROR");
+  digitalWrite(9, LOW);
+  //Flash 1.1
+  digitalWrite(8, HIGH);
+  delay(100);
+  digitalWrite(8, LOW);
+  delay(100);
+
+  //Flash 1.2
+  digitalWrite(8, HIGH);
+  delay(100);
+  digitalWrite(8, LOW);
+  delay(100);
+
+  //Flash 1.3
+  digitalWrite(8, HIGH);
+  delay(100);
+  digitalWrite(8, LOW);
+  delay(100);
+
+  //Pause after first group 
+  delay(500);
+
+  //Flash 2.1
+  digitalWrite(8, HIGH);
+  delay(100);
+  digitalWrite(8, LOW);
+  delay(100);
+  
+  //Flash 2.2
+  digitalWrite(8, HIGH);
+  delay(100);
+  digitalWrite(8, LOW);
+  delay(100);
+
+  //Flash 2.3
+  digitalWrite(8, HIGH);
+  delay(100);
+  digitalWrite(8, LOW);
+  delay(100);
+
+    // Pause after second group
+  delay(500);
+
 }
