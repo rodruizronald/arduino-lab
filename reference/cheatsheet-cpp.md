@@ -196,4 +196,124 @@ Variables kill magic numbers. They do **not** kill repetition — you still type
 
 ## Week 2 — Loops
 
+### `for` — do this N times
+
+```cpp
+for (int i = 0; i < N; i++) {
+  // runs N times, with i = 0, 1, … N-1
+}
+```
+
+| Piece | Runs |
+|---|---|
+| `int i = 0` | **once**, first |
+| `i < N` | **before every lap** — false ends the loop |
+| `i++` | **after every lap** |
+| `{ … }` | once per lap |
+
+Order: init → check → body → update → check → body → … → check fails → carry on after the loop.
+
+**The condition is checked one more time than the body runs.** The last check is the one that fails.
+
+### The two shapes
+
+| Shape | Runs | Use when you have… |
+|---|---|---|
+| `for (int i = 0; i < N; i++)` | N times | a **count** — end excluded |
+| `for (int pin = FIRST; pin <= LAST; pin++)` | LAST − FIRST + 1 times | the **actual first and last values** — end included |
+
+Start at `0` with `<`, or use the real bounds with `<=`. **Mixing them** — `0` with `<=`, or `1` with `<` — is how off-by-one happens.
+
+The `0` a loop starts from and the `1` inside `++` are the counting idiom, not magic numbers. Everything else gets a name.
+
+### Counting shorthand
+
+| | Means |
+|---|---|
+| `i++` | `i = i + 1` |
+| `i--` | `i = i - 1` |
+| `i += 3` | `i = i + 3` |
+| `i -= 3` | `i = i - 3` |
+
+### Comparisons
+
+`<` `<=` `>` `>=` `==` `!=` — loop conditions this week; decisions from Week 5.
+
+`==` **asks** "are these equal?". `=` **copies** right into left. Different operators that look almost the same.
+
+### `while` — keep going until…
+
+```cpp
+while (waitMs >= MIN_MS) {
+  // …
+  waitMs = waitMs - STEP_MS;   // the BODY must move toward the exit
+}
+```
+
+The header only asks a question — nothing in it changes anything. If the body doesn't move the variable toward "false", the loop never ends.
+
+| | Use when you know… |
+|---|---|
+| `for` | how many times, or the range to step through |
+| `while` | the condition to stop on |
+
+Any `for` can be rewritten as a `while`, and back. Pick the one that says what you mean.
+
+### Nested loops
+
+```cpp
+for (int row = 0; row < 3; row++) {
+  for (int col = 0; col < 4; col++) {
+    // 3 × 4 = 12 laps in total
+  }
+}
+```
+
+The inner loop runs all the way through, from scratch, for **every** lap of the outer one. The innermost spins fastest — an odometer.
+
+### The counter's scope
+
+`for (int pin = …)` creates `pin` for that loop only. After the closing `}` it's gone — `'pin' was not declared in this scope`. Two loops can each have their own `pin`.
+
+### Naming the counter
+
+`i` is fine for a pure count. When the counter means something, name it for what it means: `pin`, `flash`, `sweep`.
+
+### Tracing
+
+A trace table: one row per lap, one column per variable, plus the condition. **Check the first lap and the last lap** — the middle is almost never where the bug is.
+
+On the board, the Serial Monitor is the trace table: `Serial.println(i);` inside the loop.
+
+### Printing
+
+```cpp
+Serial.println();    // nothing in the brackets — just ends the line
+```
+
+Useful after a loop of `Serial.print`s that built up one line.
+
+### Things that bite
+
+- **A semicolon after the header.** `for (…);` — that `;` *is* the body, an empty one. The block underneath isn't in the loop; it runs once, afterwards. Compiles silently.
+- **Off-by-one.** `<` vs `<=`; starting at `0` vs `1`. Fence posts: 10 metres of fence with a post every metre needs **11** posts.
+- **Doubled ends in a bounce.** If the "out" loop and the "back" loop both include the end pins, the end LEDs light twice.
+- **A counter whose type can't reach the end.** `for (byte i = 0; i < 256; i++)` never ends — a `byte` stops at 255 and wraps back to 0.
+- **Counting an unsigned down to zero.** `for (unsigned long n = 3; n >= 0; n--)` never ends — an unsigned value is *always* `>= 0`.
+- **Unsigned subtraction below zero** wraps to about 4.29 billion. If a value can dip below zero part-way through a calculation, give it a signed type (`long`) — **and give that type to everything it's compared or combined with.** Mix signed and unsigned in one comparison and the compiler quietly treats both as unsigned.
+- **Sums grow fast.** `1 + 2 + … + 1000` is 500,500 — far past an `int`. Strictly, signed overflow is *undefined behaviour* in C++; on this board it happens to wrap. The rule isn't "know what it wraps to" — it's "pick a type big enough that it never happens."
+- **An infinite loop isn't a crash.** A frozen-looking board is a chip running flat out, doing what you said. Print the counter.
+- **Loop bounds that escape the LED range** can drive pins that don't exist, or pins 0 and 1. Nothing gets damaged; the board may act strangely until reset.
+- **Turn on compiler warnings:** File → Preferences → Compiler warnings → **All**. It catches some never-ending loops. Warnings don't stop the upload — they're the compiler asking "are you sure?"
+
+### What this week does *not* fix
+
+Loops kill **repeated blocks**. They don't kill **repeated ideas** — the sweep out and the sweep back are the same thought written twice. That's Week 3.
+
+And `for (int pin = FIRST; pin <= LAST; pin++)` only reaches LEDs on **consecutive** pins. The set of LEDs is baked into arithmetic. That's Week 4.
+
+---
+
+## Week 3 — Functions
+
 <!-- next -->
