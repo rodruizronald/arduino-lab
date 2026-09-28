@@ -54,6 +54,26 @@ Full build instructions: [`phase-1-sequence/week-01-variables/wiring.md`](../pha
 
 > Once the pins have names in your code (`PIN_RED`, `PIN_YELLOW`, `PIN_GREEN`), moving an LED to a different pin costs one line. That is the point of Week 1, demonstrated in hardware.
 
+### Week 2 — Four LEDs in a row
+
+Blue added on pin 7, at the free end of the row beside red. The row now runs in pin order, which is what makes a loop over pin numbers look like a light travelling.
+
+| Pin | Component | Notes |
+|---|---|---|
+| 7 | Blue LED | new — columns 1–5, beside red |
+| 8 | Red LED | unchanged |
+| 9 | Yellow LED | unchanged |
+| 10 | Green LED | unchanged |
+| `GND` | → breadboard `−` rail | shared by all four cathodes |
+
+```
+  blue(7) · red(8) · yellow(9) · green(10)        ← physical order = pin order
+```
+
+Full build instructions: [`phase-1-sequence/week-02-loops/wiring.md`](../phase-1-sequence/week-02-loops/wiring.md)
+
+> A 400-point breadboard has **30 columns**, numbered 1–30. The four LEDs fill the row; a fifth won't fit in line, and that's deliberate — see Week 4.
+
 <!-- Week 5 — buttons: add here -->
 
 ---
