@@ -11,7 +11,36 @@
  * WHAT TO DO
  *   1. Declare three constants above setup():
  *
- *          const int PIN_RED = 8;
+ *          /*
+ * SWAP TEST
+ * Prediction: changing only two pin declarations should keep the same
+ * visible order after swapping the red and green LEDs.
+ * Result: red was changed to pin 10 and green to pin 8. The student
+ * confirmed the order was still red, yellow, green.
+ * Final pin declarations are restored below: red 8, yellow 9, green 10.
+ *
+ * BREADBOARD (30 rows)
+ * Red: anode E10, cathode E11. Yellow: anode E20, cathode E21.
+ * Green: anode E29, cathode E30; resistor A27-A29;
+ * signal jumper B27-pin 10; ground jumper A30-negative rail.
+ * The negative rail connects to Arduino GND.
+ *
+ * The compiler error and both other Break it results are recorded in
+ * reference/mistakes.md. All three experiments were confirmed by the student.
+ * WEEK 0 COMPARISON
+ * Reviewed the finished challenge on branch feature/week-00-setup without
+ * switching branches. It has 40 digitalWrite calls and 2 pinMode calls:
+ * 24 references to red pin 8 and 18 references to green pin 9.
+ * Swapping those two LED connections would require 42 pin edits there.
+ * In this exercise, only 2 constant declarations needed to change.
+ * Week 0 used pins 8/9; Week 1 uses 8/10 for red/green. The comparison
+ * counts each program's actual red and green pin references.
+ */
+ /*
+ * const int PIN_RED = 8;
+ *const int PIN_YELLOW = 9;
+ *const int PIN_GREEN = 10;
+
  *
  *      ...and the other two. Note the naming convention: constants
  *      are SHOUTY_SNAKE_CASE, things that change are camelCase. The
@@ -60,16 +89,66 @@
  *
  *   3. Change PIN_YELLOW to 13 and upload. Two LEDs respond. Why
  *      does the board's built-in light join in? (Week 0, section 1.4.)
+ *
  */
 
 
-// TODO: three pin constants, and a named duration
 
+/*
+ * SWAP TEST
+ * Prediction: changing only two pin declarations should keep the same
+ * visible order after swapping the red and green LEDs.
+ * Result: red was changed to pin 10 and green to pin 8. The student
+ * confirmed the order was still red, yellow, green.
+ * Final pin declarations are restored below: red 8, yellow 9, green 10.
+ *
+ * BREADBOARD (30 rows)
+ * Red: anode E10, cathode E11. Yellow: anode E20, cathode E21.
+ * Green: anode E29, cathode E30; resistor A27-A29;
+ * signal jumper B27-pin 10; ground jumper A30-negative rail.
+ * The negative rail connects to Arduino GND.
+ *
+ * The compiler error and both other Break it results are recorded in
+ * reference/mistakes.md. All three experiments were confirmed by the student.
+ * WEEK 0 COMPARISON
+ * Reviewed the finished challenge on branch feature/week-00-setup without
+ * switching branches. It has 40 digitalWrite calls and 2 pinMode calls:
+ * 24 references to red pin 8 and 18 references to green pin 9.
+ * Swapping those two LED connections would require 42 pin edits there.
+ * In this exercise, only 2 constant declarations needed to change.
+ * Week 0 used pins 8/9; Week 1 uses 8/10 for red/green. The comparison
+ * counts each program's actual red and green pin references.
+ */
+
+const int PIN_RED = 8;
+const int PIN_YELLOW = 9;
+const int PIN_GREEN = 10;
+
+
+const int BLINK_TIME_MS = 500;
 
 void setup() {
-  // TODO: three pins to announce. No bare numbers.
+  pinMode(PIN_RED, OUTPUT);
+  pinMode(PIN_YELLOW, OUTPUT);
+  pinMode(PIN_GREEN, OUTPUT);
 }
 
 void loop() {
-  // TODO: red, then yellow, then green -- each on, pause, off, pause
+
+  digitalWrite(PIN_RED, HIGH);
+  delay(BLINK_TIME_MS);
+  digitalWrite(PIN_RED, LOW);
+  delay(BLINK_TIME_MS);
+
+
+  digitalWrite(PIN_YELLOW, HIGH);
+  delay(BLINK_TIME_MS);
+  digitalWrite(PIN_YELLOW, LOW);
+  delay(BLINK_TIME_MS);
+
+
+  digitalWrite(PIN_GREEN, HIGH);
+  delay(BLINK_TIME_MS);
+  digitalWrite(PIN_GREEN, LOW);
+  delay(BLINK_TIME_MS);
 }

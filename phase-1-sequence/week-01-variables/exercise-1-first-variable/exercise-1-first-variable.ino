@@ -56,13 +56,18 @@
  */
 
 
-// TODO: declare your named duration(s) here, above setup()
-
+int redOnMs = 200;
+int redOffMs = 1000;
 
 void setup() {
-  // TODO: announce the red pin
+
+  pinMode(8, OUTPUT);
 }
 
 void loop() {
-  // TODO: on, wait, off, wait -- but no bare numbers in the delays
+  digitalWrite(8, HIGH);
+  delay(redOnMs);
+
+  digitalWrite(8, LOW);
+  delay(redOffMs);
 }

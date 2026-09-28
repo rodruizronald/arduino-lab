@@ -83,13 +83,67 @@
  */
 
 
-// TODO: one variable of each type
+/*
+ * WRITTEN PREDICTIONS (recorded before the experimental upload)
+ * bool true should print 1. The four values should be 3, 9000, 1, 200.
+ * On this UNO, sizeof(int) should be 2 and sizeof(unsigned long) 4.
+ * The broken int sum is expected to show -25536; the corrected sum 40000.
+ * The broken delay should keep the red LED on for a very long time.
+ *
+ * RESULTS
+ * The experimental Serial output matched those predictions.
+ * The broken delay value printed 4294941760 ms (about 49.7 days).
+ * The student confirmed the expected behavior of the broken experiment.
+ * The corrected upload printed "Corrected waitMs: 40000".
+ * The student also confirmed the final 40-second-on / 1-second-off cycle.
+ * Signed overflow is not a reliable wrapping rule to use in C++ programs.
+ *
+ * WRITTEN ANSWER
+ * 32767 ms is 32.767 seconds. Yes, this is a realistic waiting time.
+ * int is too small for some time values on this UNO. Using unsigned long
+ * before adding the times lets this program hold the correct value 40000.
+ */
 
+
+
+int flashCount = 3;
+unsigned long cycleMs = 9000;
+bool isRunning = true;
+byte brightness = 200;
+
+const int PIN_RED = 8;
+
+
+unsigned long waitMs = 20000;
 
 void setup() {
-  // TODO: Serial.begin, then print all four. Predict bool first.
+  Serial.begin(9600);
+  pinMode(PIN_RED, OUTPUT);
+
+  Serial.println("PART 1 - TYPES");
+  Serial.print("flashCount: ");
+  Serial.println(flashCount);
+  Serial.print("cycleMs: ");
+  Serial.println(cycleMs);
+  Serial.print("isRunning: ");
+  Serial.println(isRunning);
+  Serial.print("brightness: ");
+  Serial.println(brightness);
+  Serial.print("sizeof(int): ");
+  Serial.println(sizeof(int));
+  Serial.print("sizeof(unsigned long): ");
+  Serial.println(sizeof(unsigned long));
+
+
+  waitMs = waitMs + 20000;
+  Serial.print("Corrected waitMs: ");
+  Serial.println(waitMs);
+  Serial.println("Red: 40 seconds on, 1 second off, repeating.");
 }
 
 void loop() {
-  // TODO: Part 3 only -- the overflow, then delay() on it. Then reset.
+  digitalWrite(PIN_RED, HIGH);
+  delay(waitMs);
+  digitalWrite(PIN_RED, LOW);
+  delay(1000);
 }

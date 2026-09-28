@@ -279,6 +279,27 @@ void loop() {
 
 ---
 
+## Answers A–D — Reviewed after the guided exercises
+
+These answers were reviewed after doing the exercises. They are not a record of predictions made before running them.
+
+**A:** 750 appears once each time the board starts or resets. The sum is 500 + 250, and the print is inside setup(), which runs once.
+
+**B:** 9 prints first, then 5. `int b = a;` copies the value 5 into b. Changing a later does not change b.
+
+**C:** In the exercise 3 test on this UNO, the output was -25536. The sum 40000 is too large for int on this board. Passing that negative value to delay() converted it to 4294941760 ms, about 49.7 days. This is the observed result of that experiment, not a safe general rule for signed overflow.
+
+**D:** Four problems:
+
+- `PIN_RED = 9;` tries to change a constant. Expected diagnostic: `assignment of read-only variable 'PIN_RED'`.
+- `pin_red` does not match `PIN_RED`. Expected diagnostic: `'pin_red' was not declared in this scope`.
+- `onTimeMs` was never declared. Expected diagnostic: `'onTimeMs' was not declared in this scope`. Both delay calls use that missing name.
+- `digitalWrite(PIN_RED, LOW)` is missing its final semicolon. Expected diagnostic: `expected ';' before 'delay'`.
+
+The D messages are expected diagnostic wording, not a captured compilation of this snippet. A compiler may report them in a different order or use slightly different wording. Fix the first error and compile again.
+
+---
+
 # Step 3 · WIRE
 
 **~15 minutes.**
@@ -370,6 +391,11 @@ Speed reps. Don't polish. The goal is that declaring and naming a value stops re
 Drill 6 is the one to take seriously. It is a direct re-solve of Week 0's drill 5 with this week's tools, and the two files next to each other are the clearest evidence you'll get that the week worked. *(Rule 6.)*
 
 ---
+
+### Drill results
+
+The student confirmed drills 1–10 on the UNO. Drill 1 was also tested at BLINK_MS = 250 and blinked twice as fast. Drill 8 printed `Cycle delays: 6000 ms`; the student confirmed the stopwatch check of approximately six seconds. Drill 9's expected outputs were confirmed and its final sketch keeps unsigned long. No compiler warning text was supplied.
+
 
 # Step 6 · CHALLENGE
 
@@ -468,21 +494,30 @@ Read the **first** error only. Everything after it is usually wreckage. Fix the 
 
 # Done checklist
 
-- [ ] Dry run: snippets A–D answered on paper *before* running them
-- [ ] Yellow LED wired on pin 9, green moved to pin 10, all three light
-- [ ] Exercise 1 — blink driven by a named variable
-- [ ] Exercise 2 — all three pins named; program moved to another LED with a one-line edit
-- [ ] Exercise 3 — `int` overflow observed and fixed, recorded in `reference/mistakes.md`
-- [ ] Exercise 4 — every duration derived from one constant
-- [ ] Exercise 5 — Serial printing values, not just text
-- [ ] Drills 1–10 (drill 6 compared side by side with your Week 0 version)
-- [ ] Challenge complete, spec written on paper first
-- [ ] Challenge passes the acceptance test: twice as fast in **one** edit
+- [ ] Original dry-run method: snippets A–D on paper before execution. Answers are recorded above, but were reviewed after the guided exercises; this requirement cannot be claimed retroactively.
+- [x] Yellow LED wired on pin 9, green moved to pin 10, all three light
+- [x] Exercise 1 — blink driven by a named variable
+- [x] Exercise 2 — all three pins named; swapping red and green required changing two pin declarations, and the sequence was tested.
+- [x] Exercise 3 — `int` overflow observed and fixed, recorded in `reference/mistakes.md`
+- [x] Exercise 4 — every duration derived from one constant
+- [x] Exercise 5 — Serial printing values, not just text
+- [x] Drills 1–10 tested on the UNO.
+- [ ] Compare drill 6 with Week 0 SOS.
+- [ ] Challenge fully meets every original constraint. The sequence and speed test passed; the plan is recorded in the sketch. Paper-first completion is not verified, and separate digitalWrite calls cannot meet the literal zero-gap rule.
+- [x] Challenge passes the acceptance test: twice as fast in **one** edit
 - [ ] `reference/cheatsheet-cpp.md` Week 1 section reviewed — you can explain every entry out loud
-- [ ] `reference/cheatsheet-wiring.md` updated with the three-LED circuit
-- [ ] Journal entry written, including the renaming question
+- [x] `reference/cheatsheet-wiring.md` updated with the three-LED circuit
+- [x] Journal entry written, including the renaming question
 - [ ] Everything committed to git
 
 ---
+
+## Final review before the PR
+
+- Exercise 1 names were clarified to redOnMs and redOffMs without changing its durations or instructions.
+- Confirmed UNO tests and supplied Serial output are recorded; intentional failures have been removed from final executable sketches. The drill 9 comparison is retained in comments, with only the corrected unsigned long version active.
+- The Week 0 challenge comparison is complete: 42 numeric pin references versus 2 Week 1 constant changes. Week 0 files were not edited.
+- Still required: the student's spoken review of the Week 1 C++ reference, teacher review of the exceptions above, and commit/PR creation.
+- The current branch does not yet include the three Week 0 commits present in the locally known origin/main. Preserve the current work before integrating those changes. Leave PR merge to the teacher's approval.
 
 **Next:** Week 2 — Loops. Where you stop typing the same three lines over and over, and the Week 0 challenge becomes about nine lines long.

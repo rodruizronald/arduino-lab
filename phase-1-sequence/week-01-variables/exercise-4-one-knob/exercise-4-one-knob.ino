@@ -81,13 +81,43 @@
  */
 
 
-// TODO: one knob, then everything else derived from it
 
+
+const unsigned long UNIT_MS = 200;
+const unsigned long SHORT_MS = UNIT_MS;
+const unsigned long LONG_MS = UNIT_MS * 3;
+const unsigned long GAP_MS = UNIT_MS / 2;
+
+const int PIN_RED = 8;
+const int PIN_YELLOW = 9;
+const int PIN_GREEN = 10;
 
 void setup() {
-  // TODO
+  Serial.begin(9600);
+  Serial.print("LONG_MS: ");
+  Serial.println(LONG_MS);
+
+  pinMode(PIN_RED, OUTPUT);
+  pinMode(PIN_YELLOW, OUTPUT);
+  pinMode(PIN_GREEN, OUTPUT);
 }
 
 void loop() {
-  // TODO: your sequence. No bare durations -- all derived from UNIT_MS.
+
+  digitalWrite(PIN_RED, HIGH);
+  delay(SHORT_MS);
+  digitalWrite(PIN_RED, LOW);
+  delay(GAP_MS);
+
+  digitalWrite(PIN_YELLOW, HIGH);
+  delay(SHORT_MS);
+  digitalWrite(PIN_YELLOW, LOW);
+  delay(GAP_MS);
+
+
+
+  digitalWrite(PIN_GREEN, HIGH);
+  delay(LONG_MS);
+  digitalWrite(PIN_GREEN, LOW);
+  delay(GAP_MS);
 }
