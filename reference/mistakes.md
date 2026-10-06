@@ -288,3 +288,81 @@ error: assignment of read-only variable 'PIN_RED'
 **What it means:** the name PIN_YELLOW does not choose a color. Its value chooses the pin. On this UNO, pin 13 controls the built-in L LED.
 
 **Final code restored:** PIN_RED = 8, PIN_YELLOW = 9, PIN_GREEN = 10, all const. No test assignment remains in setup(). The next exercise uses the original wiring again: red 8, yellow 9, green 10.
+
+## Week 2 — Loops
+
+### Logic errors
+
+**Extra iteration with `<=`**
+
+I changed `flash < FLASH_COUNT` to `flash <= FLASH_COUNT`.
+The loop ran one extra time because the last value was included.
+I learned that `<` stops before the limit, while `<=` includes the limit.
+With FLASH_COUNT set to 5, the counter went from 0 to 5: six flashes instead of five.
+
+**Starting the counter at 1**
+
+I changed the loop counter from 0 to 1.
+The loop ran one time less because the first iteration was skipped.
+I learned that the starting value is important when deciding how many times a loop will run.
+
+**Semicolon after a `for` loop**
+
+I added a semicolon after the `for`: `for (...);`.
+In the version without `Serial.println(flash)` in the following block, the code compiled, but the loop had an empty body. The LED code after it ran only once.
+I learned that code can compile correctly and still have a logic error.
+If I keep `Serial.println(flash)` in that block, it does not compile: `error: 'flash' was not declared in this scope`. The empty loop has already ended, so its counter is no longer available. This is why the Exercise 1 test can give a different result from dry run D1.
+
+**Loop variable outside its scope**
+
+I tried to use `flash` after the closing brace of the `for` loop.
+The compiler gave `error: 'flash' was not declared in this scope` because `flash` only exists inside the `for` loop.
+I learned that a variable declared inside a loop cannot be used outside its scope.
+
+**Missing the last pin**
+
+I changed `pin <= LAST_PIN` to `pin < LAST_PIN`.
+The LED on the last pin was skipped because the loop stopped before reaching `LAST_PIN`.
+I learned that sometimes the last value needs to be included.
+
+**Starting from `FIRST_PIN + 1`**
+
+I started the loop at `FIRST_PIN + 1`.
+The first LED was skipped because the loop started from the second pin.
+
+**Wrong setup condition**
+
+I changed the setup loop so it stopped before `LAST_PIN`.
+The last LED was not configured correctly as an output.
+I learned that the setup loop and the loop that uses the pins need to cover the correct pins.
+
+**FIRST_PIN greater than LAST_PIN**
+
+I changed `FIRST_PIN` to 10 and `LAST_PIN` to 7 while keeping the forward loop unchanged.
+The loop did not run because the first condition was already false.
+
+**While loop without changing `waitMs`**
+
+I removed the line that subtracts `STEP_MS` from `waitMs`.
+The LED continued blinking at the same speed and the loop never ended.
+The Serial Monitor kept showing the same value.
+I learned that a `while` loop needs something in its body that eventually makes its condition false.
+
+**Unsigned value going below zero**
+
+In the unsigned version, I changed `MIN_MS` to 0.
+When `waitMs` reached 0 and another 50 was subtracted, it could not become negative because it was unsigned. Instead, the value wrapped around to a very large positive number: 4294967246 for unsigned long on the UNO.
+I learned that unsigned values cannot represent negative numbers.
+
+**Fixing the unsigned problem**
+
+I changed `waitMs` to a signed type, but I also needed the related constants to use a signed type.
+The comparison can still behave incorrectly when signed and unsigned values are mixed.
+I learned that if a value can go below zero during a calculation, the related values should use compatible signed types.
+The final code uses signed int for these small times and constants.
+
+**Moving the subtraction**
+
+I moved `waitMs -= STEP_MS` to the beginning of the loop.
+This changed which values were used for the blinks: with the original settings, 450 through 0 instead of 500 through 50.
+I learned that the position of the update can also cause an off-by-one error, not only `<` and `<=`.
