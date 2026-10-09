@@ -44,10 +44,10 @@ Each will feel like relief. It only feels like relief because you did it the har
 |---|---|---|---|
 | 1 | [`week-01-variables/`](week-01-variables/) | Blink patterns driven by named values | Variables · types · constants · naming · sequential execution |
 | 2 | [`week-02-loops/`](week-02-loops/) | LED chase, bounce, binary counter | `for` / `while` · counters · nesting · off-by-one |
-| 3 | ⬜ `week-03-functions/` | Reusable pattern generators | Functions · parameters · return values · DRY · scope |
+| 3 | [`week-03-functions/`](week-03-functions/) | Reusable pattern generators | Functions · parameters · return values · DRY · scope |
 | 4 | ⬜ `week-04-arrays/` | Pattern *tables* | Arrays · indexing · iteration · data-driven design |
 
-Weeks 3–4 get written as you reach them. The plan is deliberately not written ahead, so it can adapt to what actually confuses you.
+Week 4 gets written when you reach it. The plan is deliberately not written ahead, so it can adapt to what actually confuses you.
 
 ---
 

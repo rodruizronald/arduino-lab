@@ -316,4 +316,132 @@ And `for (int pin = FIRST; pin <= LAST; pin++)` only reaches LEDs on **consecuti
 
 ## Week 3 — Functions
 
+### Defining and calling
+
+```cpp
+void blinkN(int pin, int times) {    // DEFINITION — says what the idea is
+  for (int i = 0; i < times; i++) {
+    digitalWrite(pin, HIGH);
+    delay(BLINK_MS);
+    digitalWrite(pin, LOW);
+    delay(BLINK_MS);
+  }
+}
+
+blinkN(PIN_RED, 3);                  // CALL — makes it happen
+```
+
+| Piece | Name | Meaning |
+|---|---|---|
+| `void` | return type | what comes back. `void` = nothing |
+| `blinkN` | name | a verb — it *does* something |
+| `int pin, int times` | **parameters** | the blanks, each with a type |
+| `PIN_RED, 3` | **arguments** | what fills the blanks, at this call |
+
+A definition does nothing until it's called. A call jumps in, runs the body, and **comes back to the line after it.** `blinkOnce;` without `()` is not a call — it compiles and does nothing.
+
+`setup()` and `loop()` are functions. A hidden `main()` calls `setup()` once, then `loop()` inside a `for (;;)` that never ends.
+
+### Parameters are copies
+
+```cpp
+void countDown(int times) {
+  times = times - 1;        // changes the function's own copy only
+}
+```
+
+Passing an argument is an assignment — `times = flashes` — and `=` copies (Week 1). The caller's variable is untouched. That's **pass by value**.
+
+**Arguments match parameters by position, not by name.** `blinkN(3, PIN_RED)` compiles — both are `int`s — and blinks pin 3.
+
+An argument is converted to the parameter's type, silently. `-2` passed to an `unsigned int` parameter arrives as 65,534.
+
+### Return values
+
+```cpp
+int stepsPerSweep() {
+  return 2 * (LAST_PIN - FIRST_PIN);   // hands the value back AND ends the function
+}
+
+int steps = stepsPerSweep();           // the call becomes the value
+```
+
+- `stepsPerSweep();` alone works out the answer and **throws it away**.
+- A non-`void` function must `return` a value. Forget, and it still compiles — with warnings on All, the compiler mentions it — and the caller gets garbage.
+- The return type is a type like any other: an `int` can't return 500,500. And a `long` return type doesn't help if the arithmetic inside was done in `int`.
+
+### Doers and calculators
+
+| Doers | Calculators |
+|---|---|
+| make something happen — LEDs, Serial, time | work out a value and `return` it |
+| usually `void` | the answer's type |
+| check by watching | check by **printing their answers** for a few inputs |
+
+A good calculator touches nothing: same inputs → same answer, always. Keep calculating out of doing. Two independent calculators that agree are far more trustworthy than one.
+
+### Scope
+
+| Declared… | Visible… | Lives… |
+|---|---|---|
+| inside a function, or as a parameter | only inside that function | while the function runs |
+| inside a `for` header or `{ }` block | only inside that block | while the block runs |
+| at the top of the file (global) | everywhere | the whole time |
+
+**Global constants: fine. Global variables: almost never.** A global any function can change gives you bugs that only appear the second time round. Pass values in; `return` results out.
+
+**Shadowing:** a local with the same name as a global hides the global inside that function. Legal, and confusing — two boxes, one name. Use different names.
+
+### Naming and size
+
+- **Verbs** for doers: `blinkN`, `walk`, `announce`. What-it-returns for calculators: `stepsPerSweep`, `scanMs`.
+- **The one-sentence test:** if describing the function needs the word "and", it's two functions.
+- **Short:** under ~15 lines. If it doesn't fit on screen, split it.
+
+### DRY and decomposition
+
+**DRY — Don't Repeat Yourself:** every idea has one home, so changing it is one edit.
+
+**Decomposition:** a function can earn its place by naming a step, even if it's called once. `booting(); running(); error();` — the top level reads like a summary.
+
+**Nested loops:** a loop inside a loop is often clearer as a loop that *calls a function*. The inner loop gets a name.
+
+### Refactoring — turning repeated code into a function
+
+1. Find two pieces with the same idea.
+2. **Make them the same shape** — identical except for values. Often the real work.
+3. The values that still differ become parameters.
+4. Write the function once; replace both pieces with calls.
+5. **Run it. Same behaviour?** If not, it wasn't a refactor.
+
+Decide `<` vs `<=` **once, inside the function** — have it take a count of steps — so no caller ever has to think about the boundary again.
+
+### Layout
+
+```cpp
+// constants
+void setup() { … }
+void loop()  { … }      // the summary, read first
+// your functions below
+```
+
+The Arduino IDE writes the declarations that let you define functions below where they're used. In plain C++ you do it yourself (Week 18). A function **can't be defined inside another function**.
+
+### Things that bite
+
+- **Missing `()`** — `blinkOnce;` compiles and calls nothing.
+- **Arguments in the wrong order** — compiles if the types match. The compiler can't read your intentions.
+- **Missing `return`** — compiles; garbage comes back. Warnings on All catch it.
+- **A calculator's answer thrown away** — called on a line by itself.
+- **"It worked the first time"** — a global variable changed by one function and relied on by another.
+- **Overflow inside the function** — the return type being big enough doesn't protect the arithmetic inside.
+
+### What this week does *not* fix
+
+The show in `loop()` — which pattern, how many times, how fast — is a **list of data written as code**. And every pattern still finds its LEDs with `FIRST_PIN + i` — consecutive pins only. Both are lists pretending to be code. That's Week 4.
+
+---
+
+## Week 4 — Arrays
+
 <!-- next -->
