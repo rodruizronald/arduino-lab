@@ -86,7 +86,7 @@ Getting the machine to obey you at all.
 
 ### Phase 1 — Sequence, Repetition, Decomposition `[Weeks 1–4]`
 
-> 📁 **[`phase-1-sequence/`](phase-1-sequence/)** — phase overview written; [Week 1](phase-1-sequence/week-01-variables/) and [Week 2](phase-1-sequence/week-02-loops/) ready.
+> 📁 **[`phase-1-sequence/`](phase-1-sequence/)** — phase overview written; [Week 1](phase-1-sequence/week-01-variables/), [Week 2](phase-1-sequence/week-02-loops/) and [Week 3](phase-1-sequence/week-03-functions/) ready.
 
 Four weeks, five LEDs, zero input. Everything here is about **the shape of code**.
 
@@ -289,7 +289,7 @@ arduino-lab/
 │       ├── wiring.md
 │       ├── exercise-1-blink-builtin/exercise-1-blink-builtin.ino
 │       └── challenge/challenge.ino
-├── phase-1-sequence/           ← Weeks 1–2 WRITTEN
+├── phase-1-sequence/           ← Weeks 1–3 WRITTEN
 │   ├── README.md              ← phase overview + what "done" means
 │   ├── week-01-variables/
 │   │   ├── README.md          ← concept · dry run · wiring · exercises · drills · challenge
@@ -299,7 +299,9 @@ arduino-lab/
 │   │   └── challenge/challenge.ino
 │   ├── week-02-loops/
 │   │   └── ... (same shape, plus dry-run.md)
-│   └── week-03-functions/      ← written when you reach it
+│   ├── week-03-functions/
+│   │   └── ... (same shape, plus dry-run.md)
+│   └── week-04-arrays/         ← written when you reach it
 │       └── ...
 ├── phase-2-state/
 └── ...
@@ -319,7 +321,7 @@ arduino-lab/
 ### Phase 1 — Sequence, Repetition, Decomposition
 - [ ] 🟨 [Week 1](phase-1-sequence/week-01-variables/) — Variables, types, constants
 - [ ] 🟨 [Week 2](phase-1-sequence/week-02-loops/) — Loops
-- [ ] ⬜ Week 3 — Functions
+- [ ] 🟨 [Week 3](phase-1-sequence/week-03-functions/) — Functions
 - [ ] ⬜ Week 4 — Arrays & data-driven design
 - [ ] ⬜ **Checkpoint** — Timed traffic light
 
@@ -391,4 +393,6 @@ Things to confirm before the phases that need them:
 
 **[Week 2](phase-1-sequence/week-02-loops/) is next:** loops, so the same block stops being typed over and over — and the Week 0 challenge gets rewritten at a fraction of its size.
 
-Weeks 3–4 get written as you reach them — deliberately, so they can adapt to what actually confused you.
+**[Week 3](phase-1-sequence/week-03-functions/)** follows: functions, so the same *idea* stops being written in several places — and the Week 2 scanner's two sweeps become one.
+
+Week 4 gets written when you reach it — deliberately, so it can adapt to what actually confused you.
