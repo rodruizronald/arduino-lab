@@ -84,14 +84,59 @@
  *      with blanks is what a FUNCTION is. Week 3.
  */
 
-
-// TODO: pins, counts, durations -- all named
-
+// BOOTING: 5 shared flashes; RUNNING: 3 green pulses;
+// ERROR: 2 groups of 3 red flashes. All counts and times have names.
+// Changing BOOT_FLASHES to 8 adds three repetitions with one edit.
+// In Week 0 that meant adding three six-instruction flash blocks.
+// Changing ERROR_GROUPS to 3 adds a group without copying its instructions.
+// Shared idea: flash selected LEDs a chosen number of times, with on/off times.
+const int PIN_RED = 8;
+const int PIN_GREEN = 10;
+const int BOOT_FLASHES = 5;
+const int RUN_PULSES = 3;
+const int ERROR_FLASHES = 3;
+const int ERROR_GROUPS = 2;
+const unsigned long BOOT_MS = 150;
+const unsigned long RUN_MS = 1000;
+const unsigned long ERROR_MS = 100;
+const unsigned long GROUP_PAUSE_MS = 500;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO
+  pinMode(PIN_RED, OUTPUT);
+  pinMode(PIN_GREEN, OUTPUT);
+  Serial.begin(SERIAL_BAUD);
 }
 
 void loop() {
-  // TODO: BOOTING, RUNNING, ERROR -- each one a loop
+  Serial.println("BOOTING...");
+  for (int flash = 0; flash < BOOT_FLASHES; flash++) {
+    digitalWrite(PIN_RED, HIGH);
+    digitalWrite(PIN_GREEN, HIGH);
+    delay(BOOT_MS);
+    digitalWrite(PIN_RED, LOW);
+    digitalWrite(PIN_GREEN, LOW);
+    delay(BOOT_MS);
+  }
+
+  Serial.println("RUNNING");
+  digitalWrite(PIN_RED, LOW);
+  for (int pulse = 0; pulse < RUN_PULSES; pulse++) {
+    digitalWrite(PIN_GREEN, HIGH);
+    delay(RUN_MS);
+    digitalWrite(PIN_GREEN, LOW);
+    delay(RUN_MS);
+  }
+
+  Serial.println("ERROR");
+  digitalWrite(PIN_GREEN, LOW);
+  for (int group = 0; group < ERROR_GROUPS; group++) {
+    for (int flash = 0; flash < ERROR_FLASHES; flash++) {
+      digitalWrite(PIN_RED, HIGH);
+      delay(ERROR_MS);
+      digitalWrite(PIN_RED, LOW);
+      delay(ERROR_MS);
+    }
+    delay(GROUP_PAUSE_MS);
+  }
 }

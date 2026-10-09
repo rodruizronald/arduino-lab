@@ -70,14 +70,27 @@
  *      it?
  */
 
-
-// TODO: pin, count, and durations
-
+// Prediction: 0, 1, 2, 3, 4; five flashes, then the long pause.
+// Counts 10, 1, 0 give 0..9, just 0, and no flashes or counter output.
+// At zero, the first condition is already false. PAUSE_MS still runs.
+const int PIN_RED = 8;
+const int FLASH_COUNT = 5;
+const unsigned long FLASH_MS = 150;
+const unsigned long PAUSE_MS = 1000;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO: pin, and Serial for the counter
+  pinMode(PIN_RED, OUTPUT);
+  Serial.begin(SERIAL_BAUD);
 }
 
 void loop() {
-  // TODO: one flash, inside a for loop -- then the long pause
+  for (int flash = 0; flash < FLASH_COUNT; flash++) {
+    Serial.println(flash);
+    digitalWrite(PIN_RED, HIGH);
+    delay(FLASH_MS);
+    digitalWrite(PIN_RED, LOW);
+    delay(FLASH_MS);
+  }
+  delay(PAUSE_MS);
 }

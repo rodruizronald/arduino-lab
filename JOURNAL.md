@@ -82,3 +82,70 @@ In the traffic light, I still used nine digitalWrite calls. Giving values names 
 **Name one variable you renamed after writing it**
 
 I renamed onTimeMs to redOnMs and offTimeMs to redOffMs during the final review. The first names did not say which LED the times belonged to. After working with three LEDs, I understood why including the color makes the names clearer. The values and behavior stayed the same.
+
+
+## Week 2 — Loops
+
+### What I built
+
+This week I learned how to use loops to repeat instructions without writing the same code many times. I used `for` loops to flash LEDs, move a light across different pins, and create a binary counter. I also used a `while` loop to make an LED blink faster each time.
+
+I also rewrote the Week 0 Machine Status Indicator using loops. The behavior was the same, but the code was much shorter and easier to change.
+
+### What confused me
+
+At first, it was a little confusing to know when to use `<` and when to use `<=`. I also had to pay attention to where the counter starts and how it changes.
+
+Nested loops were also a little confusing at first because one loop runs inside another loop. The binary counter helped me understand this better because I could see how each LED changed at a different speed.
+
+### What broke, and why
+
+One important error was adding a semicolon after a `for` loop. In the version without the counter print inside the following block, the program could still compile, but the loop did not control the block of code I expected.
+
+I also saw how a loop can run one time too many or one time too few depending on its starting value and condition.
+
+Another important problem happened with unsigned values. When an unsigned value tried to go below zero, it wrapped around to a very large positive value instead of becoming negative. I learned that the type of a variable can affect how a loop behaves.
+
+### What I understand now that I didn't before
+
+Now I understand that a loop is useful when I need to repeat the same instructions. Instead of copying the same code many times, I can write it once and control how many times it repeats.
+
+I also understand the three important parts of a `for` loop: where the counter starts, the condition that decides if the loop continues, and how the counter changes.
+
+I understand better why small changes such as `<` instead of `<=`, starting at 0 instead of 1, or putting an update in a different place can change the number of repetitions.
+
+### Off-by-one error
+
+An off-by-one error happens when a loop runs one time too many or one time too few.
+
+For example, changing `flash < FLASH_COUNT` to `flash <= FLASH_COUNT` makes the loop run one extra time because the last value is included. With FLASH_COUNT set to 5, I expected 0 through 4, but including the limit gives 0 through 5. The extra `=` was responsible.
+
+I learned that I should check the starting value, the condition, and the update when a loop repeats the wrong number of times.
+
+### Week 0 challenge compared with Week 2
+
+In Week 0, I had to write the same `digitalWrite` and `delay` instructions many times because I did not know how to use loops yet.
+
+In Week 2, I could write one flash inside a loop and tell the program how many times to repeat it.
+
+The behavior of the Machine Status Indicator did not change, but the Week 2 version has less repeated code and is easier to read and modify. The green LED uses pin 10 in the current circuit instead of Week 0's pin 9.
+
+- Week 0 loop() lines: 73.
+- Week 2 Exercise 5 loop() lines: 24.
+- Week 2 scanner challenge loop() lines: 18.
+- Week 0 digitalWrite calls written in loop(): 40.
+- Week 2 Exercise 5 digitalWrite calls written in loop(): 10.
+
+These counts include lines of code and loop headers, but exclude comments, blank lines, the loop() header, and lines containing only braces. They count written instructions, not how often each instruction runs.
+
+### SOS comparison
+
+With the Week 0 tools, SOS needs the instructions for each flash written out, with numbers directly in the code. In Week 1, the times have names, so changing the rhythm is easier, but the flashes are still written one by one. In Week 2, each letter uses a loop to repeat its three flashes.
+
+The Week 1 file has 18 digitalWrite calls, and the Week 2 file has 6. The message is still three short flashes, three long flashes, and three short flashes. The main difference is how much code I need to repeat.
+
+This compares the Week 0 approach with the saved Week 1 and Week 2 SOS files; it is not a comparison of three saved SOS files.
+
+### Board checks
+
+I confirmed that the Week 2 physical tests, changes, and error experiments gave the expected results on my UNO. This includes the exercises, drills, and scanner tests A, B, and C. The explanation for scanner test D is in challenge.ino. The final sketches have the normal settings restored.
