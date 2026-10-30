@@ -93,14 +93,47 @@
  *      answer -- have a reason for yours.
  */
 
-
-// TODO: four pins named for what they mean, and HIGHEST_DIGIT
-
+// Prediction: 0 = 0000 through 15 = 1111, then restart at zero.
+// HIGHEST_DIGIT = 2 gives 3*3*3*3 = 81 steps, decimal counter 0..80.
+// Digits then describe base three, but digitalWrite shows both 1 and 2 as on.
+// Swapping the outside/inside pin writes reverses the visible bit order.
+// Moving all four writes inside the innermost loop also works; this version
+// keeps each write beside its own counter to show which wheel changes.
+const int PIN_EIGHTS = 7;
+const int PIN_FOURS = 8;
+const int PIN_TWOS = 9;
+const int PIN_ONES = 10;
+const int HIGHEST_DIGIT = 1;
+const unsigned long STEP_MS = 500;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO: pins, and Serial
+  Serial.begin(SERIAL_BAUD);
+  for (int pin = PIN_EIGHTS; pin <= PIN_ONES; pin++) {
+    pinMode(pin, OUTPUT);
+  }
 }
 
 void loop() {
-  // TODO: four nested loops. Outermost = eights. Innermost = ones.
+  int number = 0;
+  for (int eights = 0; eights <= HIGHEST_DIGIT; eights++) {
+    digitalWrite(PIN_EIGHTS, eights);
+    for (int fours = 0; fours <= HIGHEST_DIGIT; fours++) {
+      digitalWrite(PIN_FOURS, fours);
+      for (int twos = 0; twos <= HIGHEST_DIGIT; twos++) {
+        digitalWrite(PIN_TWOS, twos);
+        for (int ones = 0; ones <= HIGHEST_DIGIT; ones++) {
+          digitalWrite(PIN_ONES, ones);
+          Serial.print(number);
+          Serial.print(" = ");
+          Serial.print(eights);
+          Serial.print(fours);
+          Serial.print(twos);
+          Serial.println(ones);
+          delay(STEP_MS);
+          number++;
+        }
+      }
+    }
+  }
 }

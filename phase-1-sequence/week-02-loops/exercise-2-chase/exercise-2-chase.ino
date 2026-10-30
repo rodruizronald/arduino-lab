@@ -75,14 +75,35 @@
  *   press reset.
  */
 
-
-// TODO: FIRST_PIN, LAST_PIN, and a step duration
-
+// Forward prediction: 7 8 9 10. Backward: 10 9 8 7.
+// Backward changes the start to LAST_PIN, the condition to >= FIRST_PIN,
+// and the update to pin--. Both directions are kept here to compare them.
+// Ends repeat between these two full chases; the scanner challenge removes that.
+const int FIRST_PIN = 7;
+const int LAST_PIN = 10;
+const unsigned long STEP_MS = 250;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO: every pin from FIRST_PIN to LAST_PIN is an output -- in one loop
+  Serial.begin(SERIAL_BAUD);
+  for (int pin = FIRST_PIN; pin <= LAST_PIN; pin++) {
+    pinMode(pin, OUTPUT);
+  }
 }
 
 void loop() {
-  // TODO: light each pin in turn. Then write the backwards version.
+  Serial.println("Forward");
+  for (int pin = FIRST_PIN; pin <= LAST_PIN; pin++) {
+    Serial.println(pin);
+    digitalWrite(pin, HIGH);
+    delay(STEP_MS);
+    digitalWrite(pin, LOW);
+  }
+  Serial.println("Backward");
+  for (int pin = LAST_PIN; pin >= FIRST_PIN; pin--) {
+    Serial.println(pin);
+    digitalWrite(pin, HIGH);
+    delay(STEP_MS);
+    digitalWrite(pin, LOW);
+  }
 }

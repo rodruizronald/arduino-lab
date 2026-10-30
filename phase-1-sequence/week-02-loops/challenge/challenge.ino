@@ -106,14 +106,62 @@
  * Keep this file. In Week 3 you will fold the two sweeps into one.
  */
 
-
-// TODO: the five settings
-
+/*
+ * PLAN AND TRACE (written here, not claimed as a paper exercise)
+ * Each sweep goes forward including both ends, then backward excluding
+ * both ends. FIRST_PIN starts the next sweep, so no endpoint repeats.
+ * Sweep 1 at 200 ms: 7 8 9 10 9 8.
+ * Sweep 2 at 180 ms: 7 8 9 10 9 8.
+ * Together: 7 8 9 10 9 8 7 8 9 10 9 8 ...
+ * Times: 200,180,160,140,120,100,80,60,40; then restart at 200.
+ *
+ * Acceptance predictions:
+ * A FIRST_PIN=8: 8 9 10 9 | 8 9 10 9 ...
+ * B FIRST_PIN=9: 9 10 | 9 10 ...
+ * C STEP_MS=150: 200,50; next value -100 fails the signed comparison.
+ * D FIRST_PIN=LAST_PIN=10: forward runs once, backward zero times.
+ * Only green pulses, with a very brief off interval between sweeps.
+ * There is no travel. This is a reasonable single-position display,
+ * but it is not a useful scanner. No special case is added.
+ *
+ * All changing times and related constants are signed int. The settings
+ * fit that type, including the negative value after the last subtraction.
+ */
+const int FIRST_PIN = 7;
+const int LAST_PIN = 10;
+const int START_MS = 200;
+const int STEP_MS = 20;
+const int MIN_MS = 40;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO
+  Serial.begin(SERIAL_BAUD);
+  for (int pin = FIRST_PIN; pin <= LAST_PIN; pin++) {
+    pinMode(pin, OUTPUT);
+  }
 }
 
 void loop() {
-  // TODO
+  int waitMs = START_MS;
+  int sweep = 1;
+  while (waitMs >= MIN_MS) {
+    Serial.print("Sweep ");
+    Serial.print(sweep);
+    Serial.print(" - ");
+    Serial.print(waitMs);
+    Serial.println(" ms");
+
+    for (int pin = FIRST_PIN; pin <= LAST_PIN; pin++) {
+      digitalWrite(pin, HIGH);
+      delay(waitMs);
+      digitalWrite(pin, LOW);
+    }
+    for (int pin = LAST_PIN - 1; pin > FIRST_PIN; pin--) {
+      digitalWrite(pin, HIGH);
+      delay(waitMs);
+      digitalWrite(pin, LOW);
+    }
+    waitMs -= STEP_MS;
+    sweep++;
+  }
 }

@@ -88,14 +88,41 @@
  *      Off-by-one isn't only about < and <=.
  */
 
-
-// TODO: START_MS, STEP_MS, MIN_MS, and the pin
-
+// Prediction for each version: 500,450,400,350,300,250,200,150,100,50.
+// Both versions run here, one after the other, so they can be compared.
+// Signed int is deliberate: 0 - 50 becomes -50 and fails the next check.
+// All related constants are signed too. The chosen times fit an UNO int.
+// MIN_MS can be changed to 0 to verify the fix without an unsigned wrap.
+// for keeps start/check/update together; while makes the separate update clear.
+const int PIN_RED = 8;
+const int START_MS = 500;
+const int STEP_MS = 50;
+const int MIN_MS = 50;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO
+  pinMode(PIN_RED, OUTPUT);
+  Serial.begin(SERIAL_BAUD);
 }
 
 void loop() {
-  // TODO: waitMs starts at START_MS, then a while loop
+  Serial.println("WHILE");
+  int waitMs = START_MS;
+  while (waitMs >= MIN_MS) {
+    Serial.println(waitMs);
+    digitalWrite(PIN_RED, HIGH);
+    delay(waitMs);
+    digitalWrite(PIN_RED, LOW);
+    delay(waitMs);
+    waitMs -= STEP_MS;
+  }
+
+  Serial.println("FOR");
+  for (int waitMs = START_MS; waitMs >= MIN_MS; waitMs -= STEP_MS) {
+    Serial.println(waitMs);
+    digitalWrite(PIN_RED, HIGH);
+    delay(waitMs);
+    digitalWrite(PIN_RED, LOW);
+    delay(waitMs);
+  }
 }
