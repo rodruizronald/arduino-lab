@@ -111,15 +111,35 @@
  *      more reason shadowing is confusing.)
  */
 
-
-// TODO: type the program from the comment above into this file,
-//       around these two functions. Then fix it.
-
+const int PIN_RED = 8;
+const int PIN_GREEN = 10;
+const int QUICK_COUNT = 3;
+const unsigned long QUICK_MS = 200;
+const unsigned long SLOW_MS = 1000;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO
+  pinMode(PIN_RED, OUTPUT);
+  pinMode(PIN_GREEN, OUTPUT);
+  Serial.begin(SERIAL_BAUD);
 }
 
 void loop() {
-  // TODO
+  for (int flash = 0; flash < QUICK_COUNT; flash++) {
+    blinkFor(PIN_RED, QUICK_MS);
+  }
+  blinkFor(PIN_GREEN, SLOW_MS);
+}
+
+// Each call gets its own time. There is no changing global waitMs.
+// Expected: three red blinks at 200 ms on/off, one green at 1000 ms on/off.
+void blinkFor(int pin, unsigned long ms) {
+  Serial.print("pin: ");
+  Serial.print(pin);
+  Serial.print(" ms: ");
+  Serial.println(ms);
+  digitalWrite(pin, HIGH);
+  delay(ms);
+  digitalWrite(pin, LOW);
+  delay(ms);
 }

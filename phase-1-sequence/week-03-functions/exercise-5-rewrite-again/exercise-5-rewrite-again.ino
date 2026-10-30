@@ -86,16 +86,62 @@
  *      where is it?
  */
 
-
-// TODO: pins, counts, durations
-
+const int PIN_RED = 8;
+const int PIN_GREEN = 10;
+const int BOOT_COUNT = 5;
+const int RUN_COUNT = 3;
+const int ERROR_COUNT = 3;
+const int ERROR_GROUPS = 2;
+const unsigned long BOOT_MS = 150;
+const unsigned long RUN_MS = 1000;
+const unsigned long ERROR_MS = 100;
+const unsigned long GROUP_GAP_MS = 500;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO
+  pinMode(PIN_RED, OUTPUT);
+  pinMode(PIN_GREEN, OUTPUT);
+  Serial.begin(SERIAL_BAUD);
 }
 
 void loop() {
-  // TODO: three calls
+  booting();
+  running();
+  error();
 }
 
-// TODO: the state functions, and the one they're built from
+// Five parameters: two pins, count, on time, off time.
+// Using the same pin twice flashes one LED: writing HIGH twice keeps it HIGH.
+// This avoids if and arrays. Each state makes sure the unused LED is off.
+// To get three error groups, change only ERROR_GROUPS to 3.
+// Five arguments need care; named constants make their meaning easier to read.
+void flash(int pinA, int pinB, int times, unsigned long onMs, unsigned long offMs) {
+  for (int count = 0; count < times; count++) {
+    digitalWrite(pinA, HIGH);
+    digitalWrite(pinB, HIGH);
+    delay(onMs);
+    digitalWrite(pinA, LOW);
+    digitalWrite(pinB, LOW);
+    delay(offMs);
+  }
+}
+
+void booting() {
+  Serial.println("BOOTING...");
+  flash(PIN_RED, PIN_GREEN, BOOT_COUNT, BOOT_MS, BOOT_MS);
+}
+
+void running() {
+  Serial.println("RUNNING");
+  digitalWrite(PIN_RED, LOW);
+  flash(PIN_GREEN, PIN_GREEN, RUN_COUNT, RUN_MS, RUN_MS);
+}
+
+void error() {
+  Serial.println("ERROR");
+  digitalWrite(PIN_GREEN, LOW);
+  for (int group = 0; group < ERROR_GROUPS; group++) {
+    flash(PIN_RED, PIN_RED, ERROR_COUNT, ERROR_MS, ERROR_MS);
+    delay(GROUP_GAP_MS);
+  }
+}

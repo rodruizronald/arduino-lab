@@ -112,16 +112,147 @@
  * does the show.
  */
 
-
-// TODO: constants only -- no global variables
-
+const int FIRST_PIN = 7;
+const int LAST_PIN = 10;
+const int FORWARD = 1;
+const int BACKWARD = -1;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO
+  Serial.begin(SERIAL_BAUD);
+  for (int pin = FIRST_PIN; pin <= LAST_PIN; pin++) {
+    pinMode(pin, OUTPUT);
+  }
 }
 
 void loop() {
-  // TODO: the show -- function calls only
+  scan(2, 150);
+  chase(FORWARD, 2, 100);
+  blinkAll(3, 200, 200);
+  fill(250);
+  chase(BACKWARD, 2, 100);
+  scan(1, 300);
 }
 
-// TODO: your pattern library, and its calculators
+int ledCount() {
+  return LAST_PIN - FIRST_PIN + 1;
+}
+
+unsigned long scanMs(int times, unsigned long stepMs) {
+  return 2 * (ledCount() - 1) * stepMs * times;
+}
+
+unsigned long chaseMs(int times, unsigned long stepMs) {
+  return ledCount() * stepMs * times;
+}
+
+unsigned long blinkAllMs(int times, unsigned long onMs, unsigned long offMs) {
+  return (onMs + offMs) * times;
+}
+
+unsigned long fillMs(unsigned long stepMs) {
+  return 2 * stepMs * ledCount();
+}
+
+void announceMs(unsigned long durationMs) {
+  Serial.print(durationMs);
+  Serial.println(" ms");
+}
+
+void pulse(int pin, unsigned long stepMs) {
+  digitalWrite(pin, HIGH);
+  delay(stepMs);
+  digitalWrite(pin, LOW);
+}
+
+void walk(int startPin, int direction, int steps, unsigned long stepMs) {
+  for (int step = 0; step < steps; step++) {
+    pulse(startPin + direction * step, stepMs);
+  }
+}
+
+void scan(int times, unsigned long stepMs) {
+  Serial.print("scan: ");
+  announceMs(scanMs(times, stepMs));
+  for (int sweep = 0; sweep < times; sweep++) {
+    walk(FIRST_PIN, FORWARD, ledCount(), stepMs);
+    walk(LAST_PIN - 1, BACKWARD, ledCount() - 2, stepMs);
+  }
+}
+
+void chase(int direction, int times, unsigned long stepMs) {
+  Serial.print("chase: ");
+  announceMs(chaseMs(times, stepMs));
+  int startPin = FIRST_PIN + (1 - direction) * (ledCount() - 1) / 2;
+  for (int round = 0; round < times; round++) {
+    walk(startPin, direction, ledCount(), stepMs);
+  }
+}
+
+void setAll(int state) {
+  for (int pin = FIRST_PIN; pin <= LAST_PIN; pin++) {
+    digitalWrite(pin, state);
+  }
+}
+
+void blinkAll(int times, unsigned long onMs, unsigned long offMs) {
+  Serial.print("blink all: ");
+  announceMs(blinkAllMs(times, onMs, offMs));
+  for (int flash = 0; flash < times; flash++) {
+    setAll(HIGH);
+    delay(onMs);
+    setAll(LOW);
+    delay(offMs);
+  }
+}
+
+void changeRow(int state, unsigned long stepMs) {
+  for (int pin = FIRST_PIN; pin <= LAST_PIN; pin++) {
+    digitalWrite(pin, state);
+    delay(stepMs);
+  }
+}
+
+void fill(unsigned long stepMs) {
+  Serial.print("fill: ");
+  announceMs(fillMs(stepMs));
+  changeRow(HIGH, stepMs);
+  changeRow(LOW, stepMs);
+}
+
+/*
+Function guide (prepared with the code; not claimed as a prior paper plan):
+setup(): prepares the pins.
+loop(): plays the show.
+ledCount(): returns the number of LEDs.
+scanMs(times, stepMs): returns the scan's delay total.
+chaseMs(times, stepMs): returns the chase's delay total.
+blinkAllMs(times, onMs, offMs): returns the blink pattern's delay total.
+fillMs(stepMs): returns the fill pattern's delay total.
+announceMs(durationMs): prints a duration.
+pulse(pin, stepMs): lights one pin briefly.
+walk(startPin, direction, steps, stepMs): moves a light through a set of positions.
+scan(times, stepMs): repeats a bouncing light.
+chase(direction, times, stepMs): repeats a one-way light.
+setAll(state): sets every LED to the same state.
+blinkAll(times, onMs, offMs): flashes the whole row.
+changeRow(state, stepMs): changes the row one pin at a time.
+fill(stepMs): plays the fill pattern.
+
+A: FIRST_PIN=8 changes only the constant. Expected durations in ms:
+1200,600,1200,1500,600,1200; total 6300.
+Default FIRST_PIN=7: 1800,800,1200,2000,800,1800; total 8400.
+B: The last two calls add a reverse chase and a slower scan, with no new loops.
+C: Time from the first scan announcement to the next cycle's first scan.
+The delay budget is 8.4 seconds; command/Serial overhead is additional.
+The required physical stopwatch check is not yet confirmed.
+D: walk(7,0,4,150) pulses pin 7 four times; it never moves.
+walk(7,2,4,150) visits 7,9,11,13, skipping LEDs and leaving our row.
+The loop still ends because it counts steps, not the pin's value.
+An int accepts both invalid directions. Checking and rejecting them needs
+a decision, such as if, which this assignment has not introduced.
+These are explanations, not directions to upload invalid-pin tests.
+
+Supported settings: FIRST_PIN <= LAST_PIN, at least two LEDs for scan,
+direction +1/-1, nonnegative counts, and times whose totals fit unsigned long.
+*/

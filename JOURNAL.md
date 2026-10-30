@@ -82,3 +82,56 @@ In the traffic light, I still used nine digitalWrite calls. Giving values names 
 **Name one variable you renamed after writing it**
 
 I renamed onTimeMs to redOnMs and offTimeMs to redOffMs during the final review. The first names did not say which LED the times belonged to. After working with three LEDs, I understood why including the color makes the names clearer. The values and behavior stayed the same.
+
+
+## Week 3 — Names for Ideas
+
+*Written with assistance using my reflection and my confirmation that the physical tests worked.*
+
+**What I built**
+
+This week I worked with programs that use functions to name small jobs. blinkN can blink different LEDs with different counts. Other functions calculate values, like the number of LEDs or the time a pattern needs. The Light Show combines scans, chases, flashes, and a fill pattern through function calls.
+
+**What confused me**
+
+I learned a lot this week, but I got confused in some parts at first. Sometimes I could see that the program worked, but I did not understand why it worked that way. After going through the explanations, things started to make more sense. I still need practice, but I understand the examples better now.
+
+**What broke, and why**
+
+The separate compiler tests showed that a misspelled name, a missing argument, or a parameter used outside its function stops compilation. Missing parentheses can compile without calling anything. A missing return gets a warning, but its result cannot be trusted.
+
+In the original scope exercise, a function changed a global time. That made the red LED slow after the first round. The fixed version passes the time into the function, so one call does not change another call's time.
+
+**What I understand now that I didn't at the start of the week**
+
+Now the idea of giving a small job its own name makes more sense to me. A function lets the program use that job again without writing all its instructions again. The examples helped me connect the code with what happens when it runs. I learned quite a lot, even though I needed help with some parts. I want to keep practicing so I can explain each step more easily.
+
+**The one-sentence test**
+
+The design separates the idea "announce the duration and play the pattern" into announceMs(durationMs), which prints a duration, and pattern functions such as scan(times, stepMs), which repeats a bouncing light. Both scan directions use walk(startPin, direction, steps, stepMs).
+
+This describes the prepared design, not a remembered first sentence from a paper exercise.
+
+**Three versions**
+
+| Version | Lines inside loop() | Whole program code lines |
+|---|---:|---:|
+| Week 0 Machine Status Indicator | 73 | 78 |
+| Week 2 Exercise 5 | 24 | 40 |
+| Week 3 Exercise 5 | 3 | 40 |
+
+Counting rule: exclude comments, blank lines, and lines containing only braces. Count loop headers and function headers in the whole-program total; exclude the loop() header from its body count. Week 2 is taken from the saved week-02-loops commit 7bfebc8, since this branch still contains its starter file.
+
+The whole Week 3 program is not shorter by this count, but loop() is much easier to read: booting(), running(), error(). The helper function has one home for the flashing idea.
+
+**SOS comparison**
+
+With Week 0's tools, each flash is written out with numbers. Week 1 gives the times names. Week 2 uses a loop for each letter. Week 3 gives the symbols and letters names: dot(), dash(), letterS(), letterO(). The loop reads S, O, S, then waits for the next message.
+
+The saved Week 1, Week 2, and Week 3 versions have 18, 6, and 2 written digitalWrite calls. The Week 0 part is a comparison of the approach: a saved Week 0 SOS file was not found, so this is not a claim that four files were compared.
+
+**Verification status**
+
+All 16 final sketches compiled and linked for the UNO with no diagnostics. Software trace checks covered the patterns, sums, repeated scope exercise, SOS gaps, and the challenge's four-LED and three-LED settings. I also tested the programs on my UNO and confirmed that the physical tests worked. The separate compiler checks are recorded in reference/mistakes.md. The calculated time is 10 seconds for drill 9 and 8.4 seconds for the full light show.
+
+The dry-run answers are labeled as worked explanations, because no original predictions or first prediction commit were supplied. No earlier paper plan or test result has been invented.
