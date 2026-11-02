@@ -444,4 +444,126 @@ The show in `loop()` — which pattern, how many times, how fast — is a **list
 
 ## Week 4 — Arrays
 
+### Declaring an array
+
+```cpp
+const byte LED_PINS[] = {7, 8, 9, 10, 12};
+```
+
+| Piece | Meaning |
+|---|---|
+| `const` | the contents never change |
+| `byte` | the type of **every** box |
+| `LED_PINS` | the name of the whole row |
+| `[]` | it's an array; empty brackets = count the values for me |
+| `{…}` | the values, in order |
+
+The order is the order you wrote. The size is fixed once declared.
+
+### Indexing — from zero
+
+```cpp
+LED_PINS[0]   // first   (7)
+LED_PINS[4]   // last    (12) — with 5 boxes, indexes are 0 to 4
+```
+
+The index means "steps from the start". **There is no `LED_PINS[5]`.**
+
+### Counting — let the compiler do it
+
+```cpp
+const int LED_COUNT = sizeof(LED_PINS) / sizeof(LED_PINS[0]);
+```
+
+`sizeof` = bytes. Whole array ÷ one box = number of boxes. Worked out at compile time, always right. **Never type a count by hand.**
+
+### Walking the list
+
+```cpp
+for (int i = 0; i < LED_COUNT; i++) {
+  digitalWrite(LED_PINS[i], HIGH);
+}
+```
+
+Week 2's `i = 0; i < N` idiom produces exactly the valid indexes. The counter is a **position**; the pin is `LED_PINS[i]`. Any pins, any order — reorder the list, not the code.
+
+Backwards: `for (int i = COUNT - 1; i >= 0; i--)`.
+
+### Off the end
+
+**C++ does not check indexes.** Reading `arr[COUNT]` returns whatever bytes come next in memory. Writing past the end overwrites other variables. No error, usually no warning. This is a *buffer overflow*.
+
+Trace the **last** lap: what's the biggest index the loop can produce? `i <= COUNT` is one too far.
+
+### Arrays and functions
+
+```cpp
+void chase(const byte pins[], int count, unsigned long stepMs) { … }
+
+chase(LED_PINS, LED_COUNT, 150);
+```
+
+- **The function gets the original, not a copy** — the exception to Week 3's rule. Use `const` on the parameter unless changing the array is the function's job.
+- **The function can't tell the length.** Inside it, `sizeof(pins)` is the size of an address — 2 bytes on the UNO. **Always pass the count.** Warnings on All flag `sizeof` on an array parameter.
+
+### Parallel arrays — a table
+
+```cpp
+const byte          STEP_PIN[] = {8,   9,   10};
+const unsigned long STEP_MS[]  = {300, 150, 600};
+```
+
+Same index = same row. Each array is a column. **Nothing keeps the columns the same length** — count each with `sizeof` and print the counts in `setup()`. (Bundling a row into one thing: Week 17.)
+
+Fixed text, as a recipe: `const char* NAMES[] = {"GO", "STOP"};` (Full story: Week 21.)
+
+### A grid in one list
+
+```cpp
+const byte FRAMES[] = {
+  1, 0, 0, 0, 0,     // frame 0
+  0, 1, 0, 0, 0,     // frame 1
+};
+const int FRAME_COUNT = sizeof(FRAMES) / sizeof(FRAMES[0]) / LED_COUNT;
+
+FRAMES[f * LED_COUNT + led]   // frame f, LED led
+```
+
+Skip `f` whole rows, then step `led` along. A missing value **shifts every later frame** — silently. Check the total is a whole multiple of the row length. (Real 2D arrays: Week 16.)
+
+### Data-driven design
+
+**Engine + data.** The engine is small and general and never mentions a specific pin, step or pattern — only "the current row". The data says what happens. **Change behaviour by editing data, not code.**
+
+### Memory
+
+2048 bytes for variables. After **Verify**, read *"Global variables use … bytes"*.
+
+| 100 entries of | Bytes |
+|---|---|
+| `byte` | 100 |
+| `int` | 200 |
+| `unsigned long` | 400 |
+
+Use the smallest type that fits: pins and on/off values fit in `byte`.
+
+### Things that bite
+
+- **`i <= COUNT`** — reads one past the end.
+- **A typed count** — add a value, forget the count, and it's silently ignored.
+- **`sizeof` on an array parameter** — gives the address size, not the array's.
+- **Parallel arrays of different lengths** — the shorter one is read past its end.
+- **A missing value in a flat grid** — every later row shifts.
+- **Swapping row and column** in `f * LED_COUNT + led` — compiles, wrong.
+- **Too many initializers** for a fixed-size array — a compiler error. Prefer `[]`.
+- **A function changing your array** — it got the original. Use `const`.
+
+### What Phase 1 does *not* fix
+
+Nothing reacts to the outside world (Week 5). Parallel arrays can drift (Week 17). Flat grids can shift (Week 16). `delay()` freezes everything (Week 7). Bad data can't be rejected without `if` (Week 5).
+
+---
+
+## Week 5 — Conditionals and boolean logic
+
 <!-- next -->

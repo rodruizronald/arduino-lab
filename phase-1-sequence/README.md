@@ -45,15 +45,15 @@ Each will feel like relief. It only feels like relief because you did it the har
 | 1 | [`week-01-variables/`](week-01-variables/) | Blink patterns driven by named values | Variables · types · constants · naming · sequential execution |
 | 2 | [`week-02-loops/`](week-02-loops/) | LED chase, bounce, binary counter | `for` / `while` · counters · nesting · off-by-one |
 | 3 | [`week-03-functions/`](week-03-functions/) | Reusable pattern generators | Functions · parameters · return values · DRY · scope |
-| 4 | ⬜ `week-04-arrays/` | Pattern *tables* | Arrays · indexing · iteration · data-driven design |
+| 4 | [`week-04-arrays/`](week-04-arrays/) | Pattern *tables* | Arrays · indexing · iteration · data-driven design |
 
-Week 4 gets written when you reach it. The plan is deliberately not written ahead, so it can adapt to what actually confuses you.
+All four weeks are written. The checkpoint gets written when you reach it.
 
 ---
 
 ## The hardware, once
 
-You build the circuit in Week 1 and **leave it standing for the whole phase**. Weeks 2–4 add LEDs to it but never tear it down. Week 2 adds a fourth — blue, on pin 7 — at the free end of the row.
+You build the circuit in Week 1 and **leave it standing for the whole phase**. Weeks 2–4 add LEDs to it but never tear it down. Week 2 adds a fourth — blue, on pin 7 — at the free end of the row. Week 4 adds a fifth — white, on pin 12 — on the other half of the board.
 
 That's not laziness. Rule 4: one new concept at a time. If the wiring changed every week, half your debugging time would go on circuits instead of code — and the point of these four weeks is entirely code.
 

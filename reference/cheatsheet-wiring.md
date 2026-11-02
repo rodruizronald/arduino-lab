@@ -83,6 +83,23 @@ Full build instructions: [`phase-1-sequence/week-02-loops/wiring.md`](../phase-1
 
 > A 400-point breadboard has **30 columns**, numbered 1–30. The four LEDs fill the row; a fifth won't fit in line, and that's deliberate — see Week 4.
 
+### Week 4 — A fifth LED, off the row
+
+White added on **pin 12** — deliberately not 11 — on the **top** half of the board, out of line with the row. The array decides the order now, not the breadboard.
+
+| Pin | Component | Notes |
+|---|---|---|
+| 7 | Blue LED | unchanged |
+| 8 | Red LED | unchanged |
+| 9 | Yellow LED | unchanged |
+| 10 | Green LED | unchanged |
+| 12 | White LED | new — top half: resistor `J20`–`J24`, LED `F24`/`F25`, ground `J25` → top `−` rail |
+| — | Black jumper | **top `−` rail → bottom `−` rail** |
+
+> **The top and bottom rails are separate.** Each side's `+` and `−` run the full length, but nothing joins the top pair to the bottom pair. Anything on the top half needs that one bridging wire, or its ground floats.
+
+Full build instructions: [`phase-1-sequence/week-04-arrays/wiring.md`](../phase-1-sequence/week-04-arrays/wiring.md)
+
 <!-- Week 5 — buttons: add here -->
 
 ---
