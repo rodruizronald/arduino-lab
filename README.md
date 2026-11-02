@@ -86,7 +86,7 @@ Getting the machine to obey you at all.
 
 ### Phase 1 — Sequence, Repetition, Decomposition `[Weeks 1–4]`
 
-> 📁 **[`phase-1-sequence/`](phase-1-sequence/)** — phase overview written; [Week 1](phase-1-sequence/week-01-variables/), [Week 2](phase-1-sequence/week-02-loops/) and [Week 3](phase-1-sequence/week-03-functions/) ready.
+> 📁 **[`phase-1-sequence/`](phase-1-sequence/)** — phase overview written; [Week 1](phase-1-sequence/week-01-variables/), [Week 2](phase-1-sequence/week-02-loops/), [Week 3](phase-1-sequence/week-03-functions/) and [Week 4](phase-1-sequence/week-04-arrays/) ready.
 
 Four weeks, five LEDs, zero input. Everything here is about **the shape of code**.
 
@@ -289,7 +289,7 @@ arduino-lab/
 │       ├── wiring.md
 │       ├── exercise-1-blink-builtin/exercise-1-blink-builtin.ino
 │       └── challenge/challenge.ino
-├── phase-1-sequence/           ← Weeks 1–3 WRITTEN
+├── phase-1-sequence/           ← Weeks 1–4 WRITTEN
 │   ├── README.md              ← phase overview + what "done" means
 │   ├── week-01-variables/
 │   │   ├── README.md          ← concept · dry run · wiring · exercises · drills · challenge
@@ -301,8 +301,8 @@ arduino-lab/
 │   │   └── ... (same shape, plus dry-run.md)
 │   ├── week-03-functions/
 │   │   └── ... (same shape, plus dry-run.md)
-│   └── week-04-arrays/         ← written when you reach it
-│       └── ...
+│   └── week-04-arrays/
+│       └── ... (same shape, plus dry-run.md)
 ├── phase-2-state/
 └── ...
 ```
@@ -322,7 +322,7 @@ arduino-lab/
 - [ ] 🟨 [Week 1](phase-1-sequence/week-01-variables/) — Variables, types, constants
 - [ ] 🟨 [Week 2](phase-1-sequence/week-02-loops/) — Loops
 - [ ] 🟨 [Week 3](phase-1-sequence/week-03-functions/) — Functions
-- [ ] ⬜ Week 4 — Arrays & data-driven design
+- [ ] 🟨 [Week 4](phase-1-sequence/week-04-arrays/) — Arrays & data-driven design
 - [ ] ⬜ **Checkpoint** — Timed traffic light
 
 ### Phase 2 — Decisions, Input, and State
@@ -395,4 +395,6 @@ Things to confirm before the phases that need them:
 
 **[Week 3](phase-1-sequence/week-03-functions/)** follows: functions, so the same *idea* stops being written in several places — and the Week 2 scanner's two sweeps become one.
 
-Week 4 gets written when you reach it — deliberately, so it can adapt to what actually confused you.
+**[Week 4](phase-1-sequence/week-04-arrays/)** closes Phase 1: arrays, so the row of LEDs, the patterns and the show all become data.
+
+The Phase 1 checkpoint gets written when you reach it — deliberately, so it can adapt to what actually confused you.
