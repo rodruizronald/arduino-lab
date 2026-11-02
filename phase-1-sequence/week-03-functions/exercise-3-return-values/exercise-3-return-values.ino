@@ -70,16 +70,61 @@
  *      it. That's what a second method is for.
  */
 
-
-// TODO: FIRST_PIN, LAST_PIN
-
+const int FIRST_PIN = 7;
+const int LAST_PIN = 10;
+const unsigned long SERIAL_BAUD = 9600;
 
 void setup() {
-  // TODO: Serial, then print every calculator for several inputs
+  Serial.begin(SERIAL_BAUD);
+  Serial.print("LED count: ");
+  Serial.println(ledCount());
+  Serial.print("Steps per sweep: ");
+  Serial.println(stepsPerSweep());
+  Serial.print("Sweep at 200 ms: ");
+  Serial.println(sweepMs(200));
+  Serial.print("Sweep at 100 ms: ");
+  Serial.println(sweepMs(100));
+  Serial.print("Sweep at 40 ms: ");
+  Serial.println(sweepMs(40));
+  Serial.println("n | loop | formula");
+  for (long n = 10; n <= 1000; n *= 10) {
+    Serial.print(n);
+    Serial.print(" | ");
+    Serial.print(sumByLoop(n));
+    Serial.print(" | ");
+    Serial.println(sumByFormula(n));
+  }
 }
 
 void loop() {
-  // Nothing. Calculators are checked once, in setup().
+  // Checks run once. Press RESET to print them again.
 }
 
-// TODO: the calculators
+int ledCount() {
+  return LAST_PIN - FIRST_PIN + 1;
+}
+
+int stepsPerSweep() {
+  return (ledCount() - 1) * 2;
+}
+
+unsigned long sweepMs(unsigned long stepMs) {
+  return stepsPerSweep() * stepMs;
+}
+
+long sumByLoop(long n) {
+  long total = 0;
+  for (long number = 1; number <= n; number++) {
+    total += number;
+  }
+  return total;
+}
+
+long sumByFormula(long n) {
+  // The operands must be long before multiplication, not just the result.
+  return n * (n + 1) / 2;
+}
+
+// Expected for 7..10: 4 LEDs, 6 steps, sweep times 1200,600,240 ms.
+// FIRST_PIN=8: 3 LEDs, 4 steps, sweep times 800,400,160 ms.
+// Both sum methods: 55, 5050, 500500. These are calculated expectations.
