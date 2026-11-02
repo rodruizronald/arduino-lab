@@ -67,16 +67,56 @@
  *      unused function cost anything? Does it do anything?
  */
 
-
-// TODO: pin constants and a blink duration
-
+const int FIRST_PIN = 7;
+const int LAST_PIN = 10;
+const int PIN_BLUE = 7;
+const int PIN_RED = 8;
+const int PIN_YELLOW = 9;
+const int PIN_GREEN = 10;
+const unsigned long SERIAL_BAUD = 9600;
+const unsigned long BLINK_MS = 200;
 
 void setup() {
-  // TODO: pins
+  for (int pin = FIRST_PIN; pin <= LAST_PIN; pin++) {
+    pinMode(pin, OUTPUT);
+  }
+  blinkRed();
 }
 
 void loop() {
-  // TODO: calls only
+  blinkBlue();
+  blinkRed();
+  blinkYellow();
+  blinkGreen();
 }
 
-// TODO: your blink function(s), here, below loop()
+// The first red blink runs once after reset; the four-color sequence repeats.
+// Earlier stage: three blinkRed() calls in loop() repeat three red blinks.
+// Together with setup(), that starts with four blinks, with no special gap.
+void blinkBlue() {
+  digitalWrite(PIN_BLUE, HIGH);
+  delay(BLINK_MS);
+  digitalWrite(PIN_BLUE, LOW);
+  delay(BLINK_MS);
+}
+
+void blinkRed() {
+  digitalWrite(PIN_RED, HIGH);
+  delay(BLINK_MS);
+  digitalWrite(PIN_RED, LOW);
+  delay(BLINK_MS);
+}
+
+void blinkYellow() {
+  digitalWrite(PIN_YELLOW, HIGH);
+  delay(BLINK_MS);
+  digitalWrite(PIN_YELLOW, LOW);
+  delay(BLINK_MS);
+}
+
+void blinkGreen() {
+  digitalWrite(PIN_GREEN, HIGH);
+  delay(BLINK_MS);
+  digitalWrite(PIN_GREEN, LOW);
+  delay(BLINK_MS);
+}

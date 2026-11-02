@@ -86,16 +86,52 @@
  *      type, silently.
  */
 
-
-// TODO: pins, and a blink duration
-
+const int FIRST_PIN = 7;
+const int LAST_PIN = 10;
+const int PIN_BLUE = 7;
+const int PIN_RED = 8;
+const int PIN_YELLOW = 9;
+const int PIN_GREEN = 10;
+const unsigned long SERIAL_BAUD = 9600;
+const unsigned long BLINK_MS = 200;
+const int COPY_COUNT = 3;
 
 void setup() {
-  // TODO: pins, Serial -- and the countDown proof
+  for (int pin = FIRST_PIN; pin <= LAST_PIN; pin++) {
+    pinMode(pin, OUTPUT);
+  }
+  Serial.begin(SERIAL_BAUD);
+  int flashes = COPY_COUNT;
+  countDown(flashes);
+  Serial.print("flashes after countDown: ");
+  Serial.println(flashes);
 }
 
 void loop() {
-  // TODO: calls to blinkN
+  for (int pin = FIRST_PIN; pin <= LAST_PIN; pin++) {
+    blinkN(pin, pin - FIRST_PIN + 1);
+  }
 }
 
-// TODO: blinkN(pin, times), and countDown(times)
+// Expected setup output: 3, 2, 1, then flashes after countDown: 3.
+// times is a copy of flashes, so changing times does not change flashes.
+// Drill 1 keeps the earlier four-call version of loop().
+void blinkOnce(int pin) {
+  digitalWrite(pin, HIGH);
+  delay(BLINK_MS);
+  digitalWrite(pin, LOW);
+  delay(BLINK_MS);
+}
+
+void blinkN(int pin, int times) {
+  for (int flash = 0; flash < times; flash++) {
+    blinkOnce(pin);
+  }
+}
+
+void countDown(int times) {
+  while (times > 0) {
+    Serial.println(times);
+    times--;
+  }
+}

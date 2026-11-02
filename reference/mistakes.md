@@ -13,6 +13,44 @@ Two reasons this file exists:
 
 ## Compiler errors
 
+### Week 3 — Function errors (isolated compiler checks)
+
+These messages were produced by AVR GCC 7.3.0 with -Wall -Wextra in separate test snippets. They are not copied from a student board test. Paths and line numbers are omitted; the diagnostic text is kept.
+
+**Exercise 1: wrong capital letter**
+
+```text
+error: 'blinkred' was not declared in this scope
+```
+
+blinkred and blinkRed are different names. The compiler points to the misspelled call. Use blinkRed().
+
+**Exercise 1: defining a function inside loop()**
+
+```text
+error: a function-definition is not allowed here before '{' token
+```
+
+A function definition belongs outside other functions. Move the whole definition below loop(), after loop's closing brace.
+
+**Exercise 2: missing argument**
+
+```text
+error: too few arguments to function 'void blinkN(int, int)'
+```
+
+The function needs both a pin and a count. blinkN(PIN_RED) gives it only the pin.
+
+**Exercise 4: using a parameter from another function**
+
+```text
+error: 'ms' was not declared in this scope
+```
+
+ms belongs to blinkFor. loop() cannot read it. Pass a value at the call, or print ms inside blinkFor.
+
+
+
 ### Week 1 · Exercise 1 · Break it 1 — Variable inside setup()
 
 **What I changed:** I moved `int onTimeMs = 200;` inside `setup()` and left `delay(onTimeMs);` in `loop()`. Then I clicked Verify.
@@ -127,6 +165,68 @@ error: 'onTimeMs' was not declared in this scope
 ---
 
 ## Logic errors
+
+### Week 3 — Function logic (analysis and isolated compiler checks)
+
+The student confirmed that the final programs worked on the UNO. The deliberate mistakes below are documented from separate compiler checks and code analysis; that confirmation is not treated as an observation of every broken version.
+
+**Exercise 1: no parentheses**
+
+blinkRed; does not call the function. The isolated compiler test produced:
+
+```text
+warning: statement is a reference, not call, to function 'blinkRed' [-Waddress]
+warning: statement has no effect [-Wunused-value]
+```
+
+Use blinkRed();. If all calls are removed, keeping the definition alone does not blink anything. Unreferenced function code is normally removed by the Arduino build's linker optimization, so it normally adds no flash cost to the final program.
+
+**Exercise 2: wrong argument order**
+
+blinkN(3, PIN_RED) means pin 3, eight repetitions. Both arguments are int, so the isolated compiler test gave no warning. The LED wired to pin 8 would not blink from that call. The function cannot guess that the two arguments were swapped.
+
+**Exercise 2: negative count**
+
+With signed int times, blinkN(PIN_RED, -2) gives zero blinks: the first test, 0 < -2, is false. This is a reasonable result for a count that is not positive.
+
+With unsigned int times on the UNO, -2 converts to 65534. That is a huge positive count, not zero. If the loop counter remains signed int, there is an additional problem when it grows beyond 32767; signed overflow is not a reliable counting method. Do not assume a guaranteed 65534 repetitions for that version.
+
+The isolated compiler test warned:
+
+```text
+warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+```
+
+Keeping the count and counter signed is the simple fix for this exercise.
+
+**Exercise 3: missing return**
+
+Leaving only the calculation in stepsPerSweep produced:
+
+```text
+warning: statement has no effect [-Wunused-value]
+warning: no return statement in function returning non-void [-Wreturn-type]
+```
+
+A function promising a result must return it. Using the missing result is undefined behavior, so there is no dependable number or sequence to write down. Restore return before continuing.
+
+**Exercise 3: throwing away a result**
+
+stepsPerSweep(); on a line by itself does not print or save its answer. Calling it inside Serial.println(), or assigning its result to a variable, uses the answer.
+
+**Exercise 3: arithmetic in a small type**
+
+Changing sumByFormula's parameter to int leaves n * (n + 1) as int arithmetic. On the UNO, 1000 * 1001 is too big for that type. A long return type does not make the earlier multiplication long. The isolated compiler test gave no warning. Signed overflow has no guaranteed result; compare with 500500 from the correct long version rather than promising a particular wrong number.
+
+**Exercise 4: the global value changes after the first round**
+
+In the original program, blinkSlowly sets the shared waitMs to 1000. Later calls to blinkQuickly read that changed value. A trace of the original gives 200,200,200 for the first round's quick calls, then 1000,1000,1000 in the next round.
+
+The quick fix resets the global to 200 inside blinkQuickly. It helps those calls, but a third function could still change the same variable. The order of calls still matters.
+
+Declaring a local int waitMs = 1000 inside blinkSlowly hides the global instead. Two different variables then have the same name, which is confusing. The final fix removes the changing global entirely and passes the required time to blinkFor(pin, ms).
+
+
 
 ### Week 1 · Exercise 5 · Break it 2 — No line breaks
 
